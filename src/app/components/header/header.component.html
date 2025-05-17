@@ -1,0 +1,27 @@
+<header class="h-20 bg-gray-50 flex justify-between px-20 items-center relative">
+  <app-search class="w-96" />
+  <div class="flex gap-5 pr-20">
+    <div class="flex gap-5 justify-center items-center">
+      <h2 class="text-xl">
+        Empresa parceira LTDA
+      </h2>
+      <div class="bg-[#EDEDED] cursor-pointer w-10 h-10 flex justify-center items-center rounded-full">
+        <i class="fa-regular fa-user text-xl"></i>
+      </div>
+      <div>
+        <i class="fa-solid fa-chevron-down text-xl cursor-pointer text-[#777395] hover:text-[#EDEDED]" (click)="toggle()"
+        [ngClass]="{ 'flipY': isVisivel, 'flipYR':!isVisivel && !isFirstClick  }"
+        ></i>
+        <!-- <i class="fa-solid fa-arrow-right-to-bracket text-xl"></i> -->
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute bg-white z-10 shadow-md w-52 right-20 top-18 border border-gray-200 rounded-md py-2 animate-[popIn_0.40s_ease-out_forwards]" [ngClass]="{ 'hidden': !isVisivel }" (mouseleave)="toggle()">
+    <ul class="p-1">
+      <li class="border-b border-gray-200 px-3 py-1 hover:bg-[#EDEDED]">Minha conta</li>
+      <li class="px-3 py-1 hover:bg-[#EDEDED] text-red-400">Sair</li>
+    </ul>
+  </div>
+</header>

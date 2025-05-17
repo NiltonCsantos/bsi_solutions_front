@@ -1,0 +1,51 @@
+<div class=" flex flex-col h-[75vh] w-[75vw] gap-5 overflow-y-scroll">
+
+  <app-legends routerLink="solicitar" title="Chamados" textButton="Cadastrar" pathRoute="solicitar"
+    *hasPermission="[profile.ROLE_EMPRESA]" />
+
+  <table class="w-full bg-white shadow-2xl  h-full  overflow-y-scroll">
+    <thead class="w-full relative">
+      <tr class="flex justify-between items-center py-2 p-10 rounded-md w-full  ">
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32 ">Título</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32 "
+          *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_SUPORTE, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">
+          Empresa</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32 ">Aberto em</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32 ">Status</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_EMPRESA]">Editar</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32"
+          *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">Profissional</th>
+        <!--
+        <th class="text-left font-semibold text-sm w-32 absolute right-0 pl-15 cursor-pointer">
+          <i class="fa-solid fa-arrows-rotate text-sm"></i>
+        </th> -->
+      </tr>
+
+    </thead>
+    <tbody>
+      <tr class="flex justify-between items-center py-2 px-10">
+        @for (ticket of tickets; track $index) {
+        <td class="text-left text-sm w-32">{{ticket.chaTxTitulo}}</td>
+        <td class="text-left text-sm w-32"
+          *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_SUPORTE, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">João
+        </td>
+        <td class="text-left text-sm w-32">{{ticket.chaTxDtAbertura}}</td>
+        <td class=" text-sm w-32 px-3">
+          <div class="w-6 h-6 rounded-full " [ngStyle]="{ 'background-color': getStatus(ticket.chaTxStatus) }">
+
+          </div>
+        </td>
+
+         <td class="text-left text-sm w-32" *hasPermission="[profile.ROLE_EMPRESA]">João</td>
+           <td class="text-left text-sm w-32" *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">
+          João</td>
+
+        }
+
+
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,1 +1,5 @@
-<p>button works!</p>
+<button class="h-full w-full  text-[#F5F5F5] text-2xl font-semibold rounded-sm cursor-pointer"
+[ngClass]="{'bg-[#363062]':!disabled, 'bg-[#363062]/40 cursor-not-allowed': disabled}" [disabled]="disabled"
+>
+  {{text}}
+</button>

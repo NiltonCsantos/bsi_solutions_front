@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormComponent } from "./form/form.component";
 
 @Component({
@@ -6,6 +6,7 @@ import { FormComponent } from "./form/form.component";
   imports: [FormComponent],
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export default class LoginComponent {
+
 
 }
