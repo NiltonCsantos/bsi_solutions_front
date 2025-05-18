@@ -2,8 +2,8 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthData } from '../../model/auth';
-import { Ticket } from '../../model/enterprise';
-import { PageResponse } from '../../model/pageResponse';
+import { Teams, Ticket } from '../../model/enterprise';
+import { PageResponse, ResponseDto } from '../../model/response';
 
 
 @Injectable({
@@ -21,8 +21,25 @@ export class ApiService {
 
   //empresa
 
-    listTickets(): Observable<PageResponse<Ticket>> {
+  listTickets(): Observable<PageResponse<Ticket>> {
     return this.httpClient.get<PageResponse<Ticket>>(`${this.url}/chamados`);
+  }
+
+  cadastreTicket(form:Ticket): Observable<void>{
+    return this.httpClient.post<void>(`${this.url}/chamados`,form);
+  }
+
+   updateTicket(form:Ticket, chaNrId:number): Observable<void>{
+    return this.httpClient.put<void>(`${this.url}/chamados/${chaNrId}`,form);
+  }
+
+  getTickForId(chaNrId:number):Observable<ResponseDto<Ticket>>{
+    return this.httpClient.get<ResponseDto<Ticket>>(`${this.url}/chamados/${chaNrId}`);
+  }
+
+
+   listTeans(): Observable<PageResponse<Teams>> {
+    return this.httpClient.get<PageResponse<Teams>>(`${this.url}/equipes`);
   }
 
 }

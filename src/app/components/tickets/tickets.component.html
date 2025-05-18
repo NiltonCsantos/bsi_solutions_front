@@ -10,41 +10,56 @@
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32 "
           *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_SUPORTE, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">
           Empresa</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-32 ">Aberto em</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Aberto em</th>
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32 ">Status</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_EMPRESA]">Editar</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_EMPRESA]">Editar
+        </th>
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32"
           *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">Profissional</th>
-        <!--
-        <th class="text-left font-semibold text-sm w-32 absolute right-0 pl-15 cursor-pointer">
-          <i class="fa-solid fa-arrows-rotate text-sm"></i>
-        </th> -->
+
+        <th class="text-left font-semibold bg-red-50 text-sm w-32 absolute right-0 pl-15"
+        >
+        <button (click)="this.getTicket()" class="cursor-pointer">
+                <i class="fa-solid fa-arrows-rotate text-sm" ></i>
+        </button>
+
+        </th>
       </tr>
 
     </thead>
     <tbody>
+      @for (ticket of tickets; track $index) {
       <tr class="flex justify-between items-center py-2 px-10">
-        @for (ticket of tickets; track $index) {
+
         <td class="text-left text-sm w-32">{{ticket.chaTxTitulo}}</td>
         <td class="text-left text-sm w-32"
           *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_SUPORTE, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">João
         </td>
-        <td class="text-left text-sm w-32">{{ticket.chaTxDtAbertura}}</td>
-        <td class=" text-sm w-32 px-3">
-          <div class="w-6 h-6 rounded-full " [ngStyle]="{ 'background-color': getStatus(ticket.chaTxStatus) }">
+        <td class="text-left text-sm w-36">{{ticket.chaTxDtAbertura! | converDate }}</td>
+        <td class=" text-sm w-32 px-2 relative" (mouseenter)="hoveredIndex = $index" (mouseleave)="hoveredIndex = null">
+          <div class="w-6 h-6 rounded-full " [ngStyle]="{ 'background-color': getStatus(ticket.chaTxStatus!)
+          }">
 
+            <div class="absolute right-5 top-0  p-1 rounded-md text-white    animate-[popIn_0.40s_ease-out_forwards]"
+              [ngStyle]="{ 'background-color': getStatus(ticket.chaTxStatus!)}"
+              [ngClass]="{'hidden': hoveredIndex !== $index}">
+              <p class="text-sm">
+                {{ticket.chaTxStatus}}
+              </p>
+            </div>
           </div>
         </td>
 
-         <td class="text-left text-sm w-32" *hasPermission="[profile.ROLE_EMPRESA]">João</td>
-           <td class="text-left text-sm w-32" *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">
+        <td class="text-left text-sm w-32 px-3" *hasPermission="[profile.ROLE_EMPRESA]">
+          <a [routerLink]="['solicitar', ticket.chaNrId]">
+            <i class="fa-regular fa-pen-to-square text-xl cursor-pointer"></i>
+          </a>
+        </td>
+        <td class="text-left text-sm w-32"
+          *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">
           João</td>
-
-        }
-
-
-
       </tr>
+      }
     </tbody>
   </table>
 

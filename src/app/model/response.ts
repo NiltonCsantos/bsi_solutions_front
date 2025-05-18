@@ -7,3 +7,8 @@ export interface PageResponse<T> {
     content: T[]
   }
 }
+
+export interface ResponseDto<T> {
+  response: T,
+  status: number
+}

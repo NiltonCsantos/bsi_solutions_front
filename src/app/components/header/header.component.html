@@ -20,8 +20,12 @@
   <div
     class="absolute bg-white z-10 shadow-md w-52 right-20 top-18 border border-gray-200 rounded-md py-2 animate-[popIn_0.40s_ease-out_forwards]" [ngClass]="{ 'hidden': !isVisivel }" (mouseleave)="toggle()">
     <ul class="p-1">
-      <li class="border-b border-gray-200 px-3 py-1 hover:bg-[#EDEDED]">Minha conta</li>
-      <li class="px-3 py-1 hover:bg-[#EDEDED] text-red-400">Sair</li>
+      <li class="border-b border-gray-200 px-3 py-1 hover:bg-[#EDEDED]">
+        <a [routerLink]="['/minha-conta']">Minha conta</a>
+      </li>
+      <li class="px-3 py-1 hover:bg-[#EDEDED] text-red-400"
+      (click)="logout()"
+      >Sair</li>
     </ul>
   </div>
 </header>

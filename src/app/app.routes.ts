@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -14,5 +15,10 @@ export const routes: Routes = [
   {
     path: 'chamados',
     loadChildren: () => import('./routes/autenticate.routes').then((r) => r.authRoutes)
+  },
+    {
+    path: 'minha-conta',
+    loadComponent: () => import("./components/my-acount/my-acount.component"),
+    canActivate: [authGuard],
   },
 ];

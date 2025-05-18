@@ -4,7 +4,7 @@
 
 
   <div class="bg-white h-full  overflow-y-scroll">
-    <form class="flex w-full gap-5 flex-col bg-white shadow-2xl p-5 rounded-md">
+    <form class="flex w-full gap-5 flex-col bg-white shadow-2xl p-5 rounded-md" [formGroup]="tickForm" (ngSubmit)="saveOrUpdateTicket()">
       <div class="flex w-full gap-5">
         <div class="flex flex-col gap-2.5 py-5 w-96">
           <label for="title">
@@ -14,7 +14,7 @@
           <div class="h-10 w-full border-1 rounded-md border-gray-300">
             <input type="text"
               class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="password" id="title">
+              formControlName="chaTxTitulo" id="title">
           </div>
         </div>
 
@@ -26,10 +26,10 @@
           <div class="h-10 w-full border-1 rounded-md border-gray-300">
             <select
               class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="password" id="team">
-              <option [value]="null">Selecione uma opção</option>
+              formControlName="eqiNrId" id="team">
+              <option [value]="0">Selecione uma opção</option>
               @for (team of teams; track $index) {
-                      <option [value]="team">{{team}}</option>
+                      <option [value]="team.eqiNrId">{{team.eqiTxNome}}</option>
               }
             </select>
           </div>
@@ -44,7 +44,7 @@
         <div class="w-full  flex gap-5 h-40">
           <div class="h-10 w-full border border-none flex items-center px-5 cursor-pointer relative">
             <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              formControlName="password" id="description" />
+             id="description" />
             <i class="fa-solid fa-image text-xl"></i>
           </div>
         </div>
@@ -58,17 +58,19 @@
         <div class="h-40 w-full border border-gray-300 rounded-md">
           <textarea
             class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5 py-4 resize-none"
-            formControlName="password" id="description"></textarea>
+            formControlName="chaTxDescricao" id="description"></textarea>
         </div>
       </div>
 
       <div class="w-full flex justify-end  items-end flex-grow">
 
-        <div class=" p-2  rounded-xs flex justify-center items-center bg-[#363062] text-white font-semibold w-28">
-          <button>
+        <div class=" p-2  rounded-xs flex justify-center items-center text-white font-semibold w-28"
+          [ngClass]="{'bg-[#363062]':tickForm.valid, 'bg-[#363062]/40 cursor-not-allowed': !tickForm.valid}">
+          <button [disabled]="!tickForm.valid">
             salvar
           </button>
         </div>
+
       </div>
     </form>
 
