@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthData } from '../../model/auth';
 import { Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
+import { Professional } from '../../model/admin';
 
 
 @Injectable({
@@ -24,7 +25,7 @@ export class ApiService {
   listTickets(chaTxTitulo: string): Observable<PageResponse<Ticket>> {
     const params: any = {};
 
-    if (chaTxTitulo !== undefined && chaTxTitulo !=="") {
+    if (chaTxTitulo !== undefined && chaTxTitulo !== "") {
       params.chaTxTitulo = chaTxTitulo;
     }
 
@@ -49,8 +50,31 @@ export class ApiService {
     return this.httpClient.get<PageResponse<Teams>>(`${this.url}/equipes`);
   }
 
-}
+  //#administrador
 
+  getProfessionals(): Observable<PageResponse<Professional>> {
+    return this.httpClient.get<PageResponse<Professional>>(`${this.url}/profissionais`);
+  }
+
+    getProfessionalForId(proNrId:number): Observable<ResponseDto<Professional>> {
+    return this.httpClient.get<ResponseDto<Professional>>(`${this.url}/profissionais/${proNrId}`);
+  }
+
+
+
+  disableProfessional(proNrId: number): Observable<PageResponse<void>> {
+    return this.httpClient.patch<PageResponse<void>>(`${this.url}/profissionais/${proNrId}`, {});
+  }
+
+  cadastreProfessional(form: Professional): Observable<void> {
+    return this.httpClient.post<void>(`${this.url}/admin/registrar-profissional`, form);
+  }
+
+  updateProfessional(form: Professional, proNrId:number): Observable<void> {
+    return this.httpClient.put<void>(`${this.url}/admin/atualizar-profissional/${proNrId}`, form);
+  }
+
+}
 
 type userLogin = {
   usuTxEmail: string,

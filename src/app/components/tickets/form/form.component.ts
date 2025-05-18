@@ -40,7 +40,6 @@ export default class FormComponent implements OnInit {
 
 
   saveOrUpdateTicket() {
-
     const form: Ticket = {
       chaTxDescricao: this.tickForm.value.chaTxDescricao!,
       chaTxTitulo: this.tickForm.value.chaTxTitulo!,

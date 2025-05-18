@@ -11,15 +11,19 @@
         <i class="fa-solid fa-table-columns"></i>
         Dashboards
       </li>
-      <li class="text-xl font-semibold text-[#777395] cursor-pointer pt-5"
-      >
-        <i class="fa-solid fa-ticket" ></i>
+      <li class="text-xl font-semibold text-[#777395] cursor-pointer pt-5">
+        <a [routerLink]="['/chamados']">
+        <i class="fa-solid fa-ticket"></i>
         Chamados
+        </a>
       </li>
+
       <li class="text-xl font-semibold text-[#777395] cursor-pointer pt-5"
         *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO, profile.ROLE_SUPORTE]">
-        <i class="fa-solid fa-user-plus"></i>
-        Profissionais
+        <a [routerLink]="['profissionais']">
+          <i class="fa-solid fa-user-plus"></i>
+          Profissionais
+        </a>
       </li>
     </ul>
   </div>

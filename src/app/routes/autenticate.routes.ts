@@ -18,7 +18,22 @@ export const authRoutes: Routes = [
       {
         path: 'solicitar/:id',
         loadComponent: () => import("../components/tickets/form/form.component")
-      }
+      },
+      {
+        path: 'profissionais',
+        loadComponent: () => import("../components/professionals/professionals.component"),
+        canActivate: [authGuard],
+      },
+       {
+        path: 'cadastrar-profissionais',
+        loadComponent: () => import("../components/professionals/form/form.component"),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'cadastrar-profissionais/:id',
+        loadComponent: () => import("../components/professionals/form/form.component"),
+        canActivate: [authGuard],
+      },
     ],
   }
 ];

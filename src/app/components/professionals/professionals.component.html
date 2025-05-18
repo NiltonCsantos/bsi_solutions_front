@@ -1,0 +1,90 @@
+<div class=" flex flex-col h-[75vh] w-[75vw] gap-5 overflow-y-scroll relative">
+
+  <app-legends routerLink="solicitar" title="Profissionais" textButton="Cadastrar"
+    pathRoute="/chamados/cadastrar-profissionais" />
+
+  <table class="w-full bg-white shadow-xl  h-full  overflow-y-scroll">
+    <thead class="w-full relative">
+      <tr class="flex justify-between items-center px-10 rounded-md w-full  pt-8">
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Nome</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Cpf</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Celular</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Email</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Equipe</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Status</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-28 ">Editar</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      @for (professional of professionals; track $index) {
+      <tr class="flex justify-between items-center py-2 px-10">
+
+        <td class="text-left text-sm w-46 ">{{professional.usuTxNome}}</td>
+        <td class="text-left text-sm w-46 ">{{professional.proTxCpf}}</td>
+        <td class="text-left text-sm w-46">{{professional.proTxCelular}}</td>
+        <td class="text-left text-sm w-46">{{professional.usuTxEmail}}</td>
+        <td class="text-left text-sm w-46">
+          {{professional.equiTxNome}}
+        </td>
+        <td class="text-left text-sm w-46 flex items-center gap-4">
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" [checked]="professional.usuBlAtivo"
+              (click)="onToggleClick($event, professional)">
+
+            <div
+              class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition duration-300">
+            </div>
+            <div
+              class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform duration-300 peer-checked:translate-x-5">
+            </div>
+          </label>
+
+        </td>
+        <td class="text-left text-sm w-28 px-3">
+          <a [routerLink]="['/chamados/cadastrar-profissionais', professional.proNrId]">
+            <i class="fa-regular fa-pen-to-square text-xl cursor-pointer"></i>
+          </a>
+        </td>
+
+
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="absolute w-full h-full  flex  justify-center rounded-md shadow-2xl " [ngClass]="{'hidden':isHidden}">
+
+    <div class="w-[455px] h-72 bg-white shadow-2xl  px-5">
+
+      <h2 class="text-6xl text-red-500 text-center py-5">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </h2>
+
+      <p class="text-xl text-left">
+        Ao desativar o usuário, ele não poderá mais acessar o sistema até que seja ativo novamente.
+      </p>
+
+      <p class="text-center text-xl">
+        Deseja proseguir?
+      </p>
+
+      <div class="p-5 flex w-full justify-between">
+        <button class="bg-blue-500 p-1 rounded-md text-white w-32 cursor-pointer" (click)="disable()">
+          <p class="text-xl">
+            Voltar
+          </p>
+        </button>
+
+        <button class="bg-red-500 p-1 rounded-md w-32 text-white cursor-pointer">
+          <p class="text-xl" (click)="managerUser(selectedProfessional!)">
+            Confirmar
+          </p>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

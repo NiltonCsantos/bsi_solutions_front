@@ -1,0 +1,92 @@
+<div class=" flex flex-col h-[75vh] w-[75vw] gap-5">
+
+  <app-legends pathRoute="/chamados" title="Cadastrar novo chamado" textButton="Voltar" />
+
+
+  <div class="bg-white h-full  overflow-y-scroll">
+    <form class="flex w-full gap-5 flex-col h-full shadow-2xl p-5 rounded-md" [formGroup]="professionalForm"
+      (ngSubmit)="saveOrUpdateProfessional()">
+      <div class="flex w-full gap-5 flex-wrap">
+        <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="name">
+            <h2 class="">Nome</h2>
+          </label>
+
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <input type="text"
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="usuTxNome" id="name">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="phone">
+            <h2 class="">Celular</h2>
+          </label>
+
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <input type="text"
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="proTxCelular" id="phone">
+          </div>
+        </div>
+
+         <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="cpf">
+            <h2 class="">CPF</h2>
+          </label>
+
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <input type="text"
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="proTxCpf" id="cpf">
+          </div>
+        </div>
+
+         <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="email">
+            <h2 class="">Email</h2>
+          </label>
+
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <input type="email"
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="usuTxEmail" id="email">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="title">
+            <h2 class="">Time</h2>
+          </label>
+
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <select
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="eqiNrId" id="team">
+              <option [value]="0">Selecione uma opção</option>
+              @for (team of teams; track $index) {
+                      <option [value]="team.eqiNrId">{{team.eqiTxNome}}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="w-full flex justify-end  items-end flex-grow">
+
+        <div class=" p-2  rounded-xs flex justify-center items-center text-white font-semibold w-28"
+          [ngClass]="{'bg-[#363062]':professionalForm.valid, 'bg-[#363062]/40 cursor-not-allowed': !professionalForm.valid}">
+          <button [disabled]="!professionalForm.valid">
+            salvar
+          </button>
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+
+
+</div>
