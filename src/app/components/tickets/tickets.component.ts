@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HasPermissionDirective } from '../../directives/has-permission.directive';
 import { ProfileEnum } from '../../enums/ProfileEnum';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LegendsComponent } from "../shared/legends/legends.component";
 import { ApiService } from '../../services/api/api.service';
 import { Ticket } from '../../model/enterprise';
@@ -18,27 +18,30 @@ import { ConverDatePipe } from '../../pipes/conver-date.pipe';
 export default class TicketsComponent implements OnInit {
 
   protected profile = ProfileEnum;
-
   protected apiService: ApiService = inject(ApiService);
-
   protected hoveredIndex: number | null = null;
-
-
   protected tickets: Ticket[] = []
-
   isHidden: boolean = true
+  private router: Router = inject(Router);
+  private route: ActivatedRoute = inject(ActivatedRoute)
 
   ngOnInit(): void {
     this.getTicket();
   }
 
   getTicket() {
-    this.apiService.listTickets()
+
+    this.route.queryParams.subscribe(params => {
+      const chaTxTitulo = params['chaTxTitulo'];  // nome do parâmetro que quer extrair
+
+    this.apiService.listTickets(chaTxTitulo)
       .subscribe({
         next: (value) => {
           this.tickets = value.response.content;
         },
       })
+    });
+
   }
 
   getStatus(ticketStatus: TicketEnum): string {

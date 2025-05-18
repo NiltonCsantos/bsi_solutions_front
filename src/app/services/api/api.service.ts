@@ -21,24 +21,31 @@ export class ApiService {
 
   //empresa
 
-  listTickets(): Observable<PageResponse<Ticket>> {
-    return this.httpClient.get<PageResponse<Ticket>>(`${this.url}/chamados`);
+  listTickets(chaTxTitulo: string): Observable<PageResponse<Ticket>> {
+    const params: any = {};
+
+    if (chaTxTitulo !== undefined && chaTxTitulo !=="") {
+      params.chaTxTitulo = chaTxTitulo;
+    }
+
+    return this.httpClient.get<PageResponse<Ticket>>(`${this.url}/chamados`, { params });
+
   }
 
-  cadastreTicket(form:Ticket): Observable<void>{
-    return this.httpClient.post<void>(`${this.url}/chamados`,form);
+  cadastreTicket(form: Ticket): Observable<void> {
+    return this.httpClient.post<void>(`${this.url}/chamados`, form);
   }
 
-   updateTicket(form:Ticket, chaNrId:number): Observable<void>{
-    return this.httpClient.put<void>(`${this.url}/chamados/${chaNrId}`,form);
+  updateTicket(form: Ticket, chaNrId: number): Observable<void> {
+    return this.httpClient.put<void>(`${this.url}/chamados/${chaNrId}`, form);
   }
 
-  getTickForId(chaNrId:number):Observable<ResponseDto<Ticket>>{
+  getTickForId(chaNrId: number): Observable<ResponseDto<Ticket>> {
     return this.httpClient.get<ResponseDto<Ticket>>(`${this.url}/chamados/${chaNrId}`);
   }
 
 
-   listTeans(): Observable<PageResponse<Teams>> {
+  listTeans(): Observable<PageResponse<Teams>> {
     return this.httpClient.get<PageResponse<Teams>>(`${this.url}/equipes`);
   }
 

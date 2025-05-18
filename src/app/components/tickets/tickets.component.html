@@ -3,7 +3,7 @@
   <app-legends routerLink="solicitar" title="Chamados" textButton="Cadastrar" pathRoute="solicitar"
     *hasPermission="[profile.ROLE_EMPRESA]" />
 
-  <table class="w-full bg-white shadow-2xl  h-full  overflow-y-scroll">
+  <table class="w-full bg-white shadow-xl  h-full  overflow-y-scroll">
     <thead class="w-full relative">
       <tr class="flex justify-between items-center py-2 p-10 rounded-md w-full  ">
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32 ">Título</th>
@@ -17,7 +17,7 @@
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32"
           *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">Profissional</th>
 
-        <th class="text-left font-semibold bg-red-50 text-sm w-32 absolute right-0 pl-15"
+        <th class="text-left font-semibold text-sm w-32 absolute right-0 pl-15"
         >
         <button (click)="this.getTicket()" class="cursor-pointer">
                 <i class="fa-solid fa-arrows-rotate text-sm" ></i>
