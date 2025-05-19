@@ -8,6 +8,7 @@ import { Teams, Ticket } from '../../../model/enterprise';
 import { NgClass } from '@angular/common';
 import { ApiService } from '../../../services/api/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-form',
@@ -59,6 +60,10 @@ export default class FormComponent implements OnInit {
           next: () => {
             this.toastService.success("chamado atualizado com sucesso")
           },
+
+          error: (e: HttpErrorResponse) => {
+            this.toastService.error(e.error.response)
+          }
         })
     }
 
@@ -83,7 +88,7 @@ export default class FormComponent implements OnInit {
             next: (value) => {
               console.log(value);
               this.tickForm.patchValue(value.response);
-            },
+            }
           })
       }
     })
