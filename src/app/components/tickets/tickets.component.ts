@@ -8,6 +8,9 @@ import { Ticket } from '../../model/enterprise';
 import { TicketEnum } from '../../enums/ticketEnum';
 import { NgClass, NgStyle } from '@angular/common';
 import { ConverDatePipe } from '../../pipes/conver-date.pipe';
+import { TicktesForHistory } from '../../model/auth';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tickets',
@@ -24,6 +27,9 @@ export default class TicketsComponent implements OnInit {
   isHidden: boolean = true
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute)
+  protected isPopupHidden:boolean = true;
+  protected ticketWithHistory?:TicktesForHistory;
+  protected toastService:ToastrService = inject(ToastrService)
 
   ngOnInit(): void {
     this.getTicket();
@@ -57,5 +63,22 @@ export default class TicketsComponent implements OnInit {
 
   toggleVisible() {
     this.isHidden = !this.isHidden
+  }
+
+  closePopup(){
+    this.isPopupHidden = true
+  }
+
+  viewPopup(chaNrID:number){
+    this.apiService.visualizeProgesse(chaNrID)
+    .subscribe({
+      next:(value)=>{
+        this.ticketWithHistory = value.response
+      },
+      error:(e:HttpErrorResponse) =>{
+        this.toastService.error(e.error.response)
+      }
+    })
+    this.isPopupHidden = false;
   }
 }

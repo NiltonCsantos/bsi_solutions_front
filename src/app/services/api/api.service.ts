@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthData } from '../../model/auth';
+import { AuthData, TicktesForHistory } from '../../model/auth';
 import { Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
-import { Professional } from '../../model/admin';
+import { Professional, QuantityTick } from '../../model/admin';
 
 
 @Injectable({
@@ -18,6 +18,12 @@ export class ApiService {
 
   login(user: userLogin): Observable<AuthData> {
     return this.httpClient.post<AuthData>(`${this.url}/auth/login`, user);
+  }
+
+  //geral
+
+  visualizeProgesse(chaNrId: number): Observable<ResponseDto<TicktesForHistory>> {
+    return this.httpClient.get<ResponseDto<TicktesForHistory>>(`${this.url}/chamados/historico/${chaNrId}`);
   }
 
   //empresa
@@ -56,13 +62,16 @@ export class ApiService {
     return this.httpClient.get<PageResponse<Professional>>(`${this.url}/profissionais`);
   }
 
-    getProfessionalForId(proNrId:number): Observable<ResponseDto<Professional>> {
+  getProfessionalForId(proNrId: number): Observable<ResponseDto<Professional>> {
     return this.httpClient.get<ResponseDto<Professional>>(`${this.url}/profissionais/${proNrId}`);
   }
 
+  getQuantityTicet(): Observable<ResponseDto<QuantityTick>> {
+    return this.httpClient.get<ResponseDto<QuantityTick>>(`${this.url}/chamados/contar`);
+  }
 
 
-  disableProfessional(proNrId: number): Observable<PageResponse<void>> {
+    disableProfessional(proNrId: number): Observable<PageResponse<void>> {
     return this.httpClient.patch<PageResponse<void>>(`${this.url}/profissionais/${proNrId}`, {});
   }
 
@@ -70,7 +79,7 @@ export class ApiService {
     return this.httpClient.post<void>(`${this.url}/admin/registrar-profissional`, form);
   }
 
-  updateProfessional(form: Professional, proNrId:number): Observable<void> {
+  updateProfessional(form: Professional, proNrId: number): Observable<void> {
     return this.httpClient.put<void>(`${this.url}/admin/atualizar-profissional/${proNrId}`, form);
   }
 

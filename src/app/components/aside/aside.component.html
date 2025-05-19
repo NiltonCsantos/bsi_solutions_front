@@ -8,13 +8,15 @@
     <ul>
       <li class="text-xl font-semibold text-[#777395] cursor-pointer"
         *hasPermission="[profile.ROLE_ADMINISTRADOR, profile.ROLE_AUXILIAR_ADMINISTRATIVO, profile.ROLE_SUPORTE, profile.ROLE_AUXILIAR_ADMINISTRATIVO]">
-        <i class="fa-solid fa-table-columns"></i>
-        Dashboards
+        <a [routerLink]="['/chamados/dashboards']">
+          <i class="fa-solid fa-table-columns"></i>
+          Dashboards
+        </a>
       </li>
       <li class="text-xl font-semibold text-[#777395] cursor-pointer pt-5">
         <a [routerLink]="['/chamados']">
-        <i class="fa-solid fa-ticket"></i>
-        Chamados
+          <i class="fa-solid fa-ticket"></i>
+          Chamados
         </a>
       </li>
 

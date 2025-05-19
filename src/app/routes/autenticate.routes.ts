@@ -34,6 +34,11 @@ export const authRoutes: Routes = [
         loadComponent: () => import("../components/professionals/form/form.component"),
         canActivate: [authGuard],
       },
+      {
+        path: 'dashboards',
+        loadComponent: () => import("../components/dashboards/dashboards.component"),
+        canActivate: [authGuard],
+      },
     ],
   }
 ];

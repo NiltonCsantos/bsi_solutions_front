@@ -1,0 +1,70 @@
+<div class=" flex flex-col h-[80vh]  w-[75vw] gap-5 overflow-y-scroll relative">
+
+  <!-- <app-legends title="DashBoards" pathRoute="/chamados/cadastrar-profissionais" /> -->
+  <div class="flex justify-between">
+    <h2 class="text-xl font-medium">Filtros</h2>
+
+    <div>
+
+      <div class="flex gap-2.5 items-center">
+        <label for="title">
+          <h2 class="">cidade</h2>
+        </label>
+
+        <div class="h-8 border-1 rounded-md border-gray-300">
+          <select
+            class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+            formControlName="eqiNrId" id="team">
+            <option value="SP">São Paulo</option>
+            <option value="RJ">Rio de Janeiro</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="w-full bg-white shadow-xl h-full flex flex-col gap-5  overflow-y-scroll px-3">
+
+    <div class="flex gap-5 justify-center items-center flex-wrap pt-3">
+      <app-card [quantity]="countQuantityTicket!.totalPedidos" text="Total" />
+      <app-card [quantity]="countQuantityTicket!.totalAberto" text="Abertos" />
+      <app-card [quantity]="countQuantityTicket!.totalEmAndamento" text="Em andamento" />
+      <app-card [quantity]="countQuantityTicket!.totalFinalizados" text="Finalizados" />
+      <app-card [quantity]="countQuantityTicket!.totalCancelado" text="Cancelados" />
+    </div>
+
+
+    <div class="grow  rounded-md flex gap-5 justify-center items-center">
+      <div class="w-[500px] h-96">
+        <app-char-pie />
+      </div>
+
+
+      <div class="bg-white w-1/2 h-full shadow-xl p-5">
+
+        <h2 class="text-xl font-medium">
+          Top Técnicos com mais chamados
+        </h2>
+
+        <div class="flex items-center gap-2 px-2 pt-5">
+          <i class="fa-solid fa-user "></i>
+          <p>
+            César
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="h-96 w-full">
+      <app-chart-column />
+    </div>
+
+
+  </div>
+
+
+
+</div>

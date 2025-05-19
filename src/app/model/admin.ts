@@ -10,3 +10,12 @@ export interface Professional{
     eqiNrId:number,
     equiTxNome?:string
 }
+
+export interface QuantityTick {
+  totalPedidos: number;
+  totalFinalizados: number;
+  totalAberto: number;
+  totalEmAndamento: number;
+  totalCancelado: number;
+}
+
