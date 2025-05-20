@@ -30,8 +30,8 @@
       <app-card [quantity]="countQuantityTicket!.totalPedidos" text="Total" />
       <app-card [quantity]="countQuantityTicket!.totalAberto" text="Abertos" />
       <app-card [quantity]="countQuantityTicket!.totalEmAndamento" text="Em andamento" />
-      <app-card [quantity]="countQuantityTicket!.totalFinalizados" text="Finalizados" />
-      <app-card [quantity]="countQuantityTicket!.totalCancelado" text="Cancelados" />
+      <app-card [quantity]="countQuantityTicket!.totalFinalizados" text="inalizados" />
+      <app-card [quantity]="countQuantityTicket!.totalCancelado" text=" cancelados" />
     </div>
 
 
@@ -40,17 +40,22 @@
         <app-char-pie />
       </div>
 
-
       <div class="bg-white w-1/2 h-full shadow-xl p-5">
-
         <h2 class="text-xl font-medium">
           Top Técnicos com mais chamados
         </h2>
 
-        <div class="flex items-center gap-2 px-2 pt-5">
-          <i class="fa-solid fa-user "></i>
+        <div class="flex items-center gap-5 px-2 pt-5">
+          <i class="fa-solid fa-user text-2xl"></i>
           <p>
-            César
+            @for (item of professionals; track $index) {
+              <p>
+                {{item.usuTxNome}}
+              </p>
+              <p>
+               Total de chamados {{item.totalChamados}}
+              </p>
+            }
           </p>
         </div>
 

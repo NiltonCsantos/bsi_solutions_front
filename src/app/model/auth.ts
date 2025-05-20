@@ -27,7 +27,7 @@ export interface DecodedToken extends JwtPayload {
 export interface TicktesForHistory {
   chaTxTitulo: string,
   chaTxDescricao: string
-  empTxNome: string,
+  usuTxNome: string,
   historicos: History[] | null
 }
 
@@ -35,5 +35,6 @@ interface History {
   hicNrId: number,
   hicTxJustificativa: string,
   hicDtAtualizacao: Date,
-  hicTxStatus: TicketEnum
+  hicTxStatus: TicketEnum,
+  proTxNome:string
 }

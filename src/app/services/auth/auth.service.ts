@@ -16,6 +16,7 @@ export class AuthService {
   private localStorageService = inject(LocalstorageService);
   private router: Router = inject(Router);
 
+
   temPermissao(perfisPermitidos: ProfileEnum[]): boolean {
     return perfisPermitidos.includes(this.getUser()!.usuTxAutoridade);
   }
@@ -26,6 +27,9 @@ export class AuthService {
 
         this.setAcessToken(value.acessToken);
         this.setRefreshToken(value.refreshToken);
+        if (this.getUser()?.usuTxAutoridade == ProfileEnum.ROLE_SUPORTE) {
+          this.getProfessional();
+        }
         this.navigateToTickets()
 
       },
@@ -34,6 +38,15 @@ export class AuthService {
         // this.toastService.error(e.error.message)
       }
     })
+  }
+
+  getProfessional() {
+    this.apiService.getProfessionalForId(this.getUser()?.usuNrId!)
+      .subscribe({
+        next: (value) => {
+          this.localStorageService.setItemForLocalStorage("professional", JSON.stringify(value.response));
+        },
+      })
   }
 
   setAcessToken(acessToken: string): void {
@@ -63,7 +76,7 @@ export class AuthService {
 
     const user: string | null = localStorage.getItem("user");
     if (user) {
-         return JSON.parse(user);
+      return JSON.parse(user);
     } else {
       return null
     }

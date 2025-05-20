@@ -5,7 +5,8 @@ import { CharPieComponent } from "./char-pie/char-pie.component";
 import { ChartColumnComponent } from "./chart-column/chart-column.component";
 import { ApiService } from '../../services/api/api.service';
 import { ToastrService } from 'ngx-toastr';
-import { QuantityTick } from '../../model/admin';
+import { QuantityTick, TicketFormTeam, TopUser } from '../../model/admin';
+import { Ticket } from '../../model/enterprise';
 
 @Component({
   selector: 'app-dashboards',
@@ -17,9 +18,12 @@ export default class DashboardsComponent implements OnInit{
   private api:ApiService = inject(ApiService)
   private toast:ToastrService = inject(ToastrService);
   protected countQuantityTicket?:QuantityTick
+  protected quantityTicketForTeam!:TicketFormTeam
+  protected professionals:TopUser[]= []
 
   ngOnInit(): void {
     this.getTicketQuantite()
+    this.getTopProfessionals()
   }
 
 
@@ -31,6 +35,17 @@ export default class DashboardsComponent implements OnInit{
       }
     })
   }
+
+  getTopProfessionals(){
+    this.api.getTicketesProfessionals()
+    .subscribe({
+      next:(value) =>{
+        this.professionals = value.response.content
+      }
+    })
+  }
+
+
 
 
 }

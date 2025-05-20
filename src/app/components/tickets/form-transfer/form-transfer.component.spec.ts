@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CharPieComponent } from './char-pie.component';
+import { FormTransferComponent } from './form-transfer.component';
 
-describe('CharPieComponent', () => {
-  let component: CharPieComponent;
-  let fixture: ComponentFixture<CharPieComponent>;
+describe('FormTransferComponent', () => {
+  let component: FormTransferComponent;
+  let fixture: ComponentFixture<FormTransferComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CharPieComponent]
+      imports: [FormTransferComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CharPieComponent);
+    fixture = TestBed.createComponent(FormTransferComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

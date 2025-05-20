@@ -1,10 +1,13 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthData, TicktesForHistory } from '../../model/auth';
+import { AuthData, TicktesForHistory, User } from '../../model/auth';
 import { Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
-import { Professional, QuantityTick } from '../../model/admin';
+import { ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TopUser } from '../../model/admin';
+import { AuthService } from '../auth/auth.service';
+import { ProfileEnum } from '../../enums/ProfileEnum';
+import { LocalstorageService } from '../localstorage/localstorage.service';
 
 
 @Injectable({
@@ -15,6 +18,8 @@ export class ApiService {
   url: string = "http://localhost:8080/v1"
 
   httpClient = inject(HttpClient);
+
+  private local: LocalstorageService = inject(LocalstorageService)
 
   login(user: userLogin): Observable<AuthData> {
     return this.httpClient.post<AuthData>(`${this.url}/auth/login`, user);
@@ -34,6 +39,13 @@ export class ApiService {
     if (chaTxTitulo !== undefined && chaTxTitulo !== "") {
       params.chaTxTitulo = chaTxTitulo;
     }
+
+    const user: User = JSON.parse(this.local.getItemForLocalStorage("user") as string);
+    const professional: Professional = JSON.parse(this.local.getItemForLocalStorage("professional") as string);
+    if (user.usuTxAutoridade == ProfileEnum.ROLE_SUPORTE && professional) {
+      params.eqiNrId = professional.eqiNrId
+    }
+
 
     return this.httpClient.get<PageResponse<Ticket>>(`${this.url}/chamados`, { params });
 
@@ -70,8 +82,15 @@ export class ApiService {
     return this.httpClient.get<ResponseDto<QuantityTick>>(`${this.url}/chamados/contar`);
   }
 
+  getQuantityTicketForTeam(munNrId?: number): Observable<ResponseDto<TicketFormTeam>> {
+    return this.httpClient.get<ResponseDto<TicketFormTeam>>(`${this.url}/chamados/contar-equipe`);
+  }
 
-    disableProfessional(proNrId: number): Observable<PageResponse<void>> {
+  manageTicket(form: ManageTicketForm): Observable<ResponseDto<void>> {
+    return this.httpClient.put<ResponseDto<void>>(`${this.url}/profissionais/gerenciar-chamado`, form);
+  }
+
+  disableProfessional(proNrId: number): Observable<PageResponse<void>> {
     return this.httpClient.patch<PageResponse<void>>(`${this.url}/profissionais/${proNrId}`, {});
   }
 
@@ -81,6 +100,14 @@ export class ApiService {
 
   updateProfessional(form: Professional, proNrId: number): Observable<void> {
     return this.httpClient.put<void>(`${this.url}/admin/atualizar-profissional/${proNrId}`, form);
+  }
+
+  getTicketesProfessionals(): Observable<PageResponse<TopUser>> {
+    return this.httpClient.get<PageResponse<TopUser>>(`${this.url}/profissionais/mais-chamados`);
+  }
+
+   getTicketsForMont(munNrId?:number): Observable<PageResponse<ticketForMonth>> {
+    return this.httpClient.get<PageResponse<ticketForMonth>>(`${this.url}/chamados/contar-mes`);
   }
 
 }

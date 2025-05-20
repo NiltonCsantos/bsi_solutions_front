@@ -12,6 +12,12 @@
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_EMPRESA]">Editar
         </th>
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32">Acompanhar</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_SUPORTE]">Cancelar
+        </th>
+
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_SUPORTE]">
+          Transferir
+        </th>
 
         <th class="text-left font-semibold text-sm w-32 absolute right-0 pl-15">
           <button (click)="this.getTicket()" class="cursor-pointer">
@@ -48,72 +54,209 @@
           </a>
         </td>
         <td class="text-left text-sm w-32">
-          <i class="fa-solid fa-eye text-xl cursor-pointer px-5"
-          (click)="viewPopup(ticket.chaNrId!)"
-          ></i>
+          <button (click)="updateTicketForm(ticket)">
+            <i class="fa-solid fa-eye text-xl cursor-pointer px-5" (click)="viewPopup(ticket.chaNrId!)"></i>
+          </button>
+        </td>
+        <td class="text-left text-sm w-32">
+          <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO"
+            (click)="updateTicketForm(ticket)">
+            <i class="fa-solid fa-ban text-xl  px-3 cursor-pointer"
+              [ngClass]="{'text-red-500':ticket.chaTxStatus != status.CONCLUIDO && ticket.chaTxStatus != status.CANCELADO}"
+              (click)="cancelTicket()"
+              ></i>
+          </button>
+        </td>
+
+        <td class="text-left text-sm w-32">
+          <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO"
+            (click)="cancelTicket()">
+            <i class="fas fa-exchange-alt px-3 text-xl"
+              [ngClass]="{'text-green-500':ticket.chaTxStatus != status.CONCLUIDO && ticket.chaTxStatus != status.CANCELADO}"></i>
+          </button>
         </td>
       </tr>
       }
     </tbody>
   </table>
 
-  <div class="absolute h-full w-full flex justify-center items-center"
-      [ngClass]="{'hidden':isPopupHidden}"
-  >
-    <div
-    class=" transform w-[500px] rounded-md shadow-2xl bg-white h-[550px] overflow-scroll p-5 flex flex-col gap-5
+  <!-- <app-form-cancel /> -->
+  <div class="absolute h-full w-full flex justify-center items-center" [ngClass]="{'hidden':isPopupCancelHidden}">
+    <div class=" transform w-[500px] rounded-md shadow-2xl bg-white h-[550px] p-5 flex flex-col gap-5
     animate-[popIn_0.40s_ease-out_forwards]
-    "
-    >
+    ">
 
-    <div class="flex justify-between items-center">
-      <h2 class="text-xl font-medium">
-        Histórico
-      </h2>
-      <i class="fa-solid fa-xmark text-xl cursor-pointer"
-      (click)="closePopup()"
-      ></i>
-    </div>
-
-    <div class="flex gap-10 px-5 flex-wrap">
-      <p>
-        Empresa solicitante:
-      </p>
-      <p>
-        {{ticketWithHistory?.empTxNome}}
-      </p>
-    </div>
-
-    <div class="flex flex-col px-5 flex-wrap">
-      <div class="flex gap-27">
-        <div>
-          <p>
-            Chamado:
-          </p>
-          <p>
-              {{ticketWithHistory?.chaTxTitulo}}
-          </p>
+      <div class="h-11/12 overflow-scroll py-5 flex flex-col gap-5">
+        <div class="fixed left-0 top-0 p-5 w-full bg-white z-0">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-medium">
+              Cancelar
+            </h2>
+            <i class="fa-solid fa-xmark text-xl cursor-pointer" (click)="closePopupFormCancel()"></i>
+          </div>
         </div>
-        <p>
-            {{ticketWithHistory?.chaTxTitulo}}
-        </p>
+
+        <div class="py-5">
+          <div class="flex flex-col gap-2.5  py-5 w-full">
+            <label for="description">
+              <h2 class="">Descricacao *</h2>
+            </label>
+            <div class="h-40 w-full border border-gray-300 rounded-md">
+              <textarea
+                class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5 py-4 resize-none"
+                id="description"
+                [(ngModel)]="description"
+                ></textarea>
+            </div>
+          </div>
+        </div>
       </div>
 
-    <div class="py-5">
-      <p>
-        Descrição:
-      </p>
-        <p >
-          {{ticketWithHistory?.chaTxDescricao}}
-      </p>
-    </div>
-    </div>
+      @if (ticketForm) {
+      @if (ticketForm.chaTxStatus != status.CONCLUIDO && ticketForm.chaTxStatus != status.CANCELADO) {
+      <div *hasPermission="[profile.ROLE_SUPORTE]" class="flex w-full left-0 justify-end">
+        <button class=" p-1 rounded-md w-32 text-white cursor-pointer"
+        [ngClass]="{'bg-red-500':description.length>0, 'bg-red-300':description.length == 0}"
+        [disabled]="description.length ==0"
+        (click)="manageTicket(ticketForm,  status.CANCELADO, description)"
+        >
+          <p class="text-xl" >
+            Cancelar
+          </p>
+        </button>
 
-    <div class="px-5">
-      <p>Lista</p>
-    </div>
+      </div>
+      }
+      }
 
+
+
+    </div>
   </div>
+
+
+  <div class="absolute h-full w-full flex justify-center items-center" [ngClass]="{'hidden':isPopupHidden}"> -->
+    <div class=" transform w-[500px] rounded-md shadow-2xl bg-white h-[550px] p-5 flex flex-col gap-5
+    animate-[popIn_0.40s_ease-out_forwards]
+    ">
+
+      <div class="h-11/12 overflow-scroll py-5 flex flex-col gap-5">
+        <div class="fixed left-0 top-0 p-5 w-full bg-white z-0">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-medium">
+              Histórico
+            </h2>
+            <i class="fa-solid fa-xmark text-xl cursor-pointer" (click)="closePopup()"></i>
+          </div>
+
+        </div>
+
+
+        <div class="flex gap-10 px-5 flex-wrap">
+          <p>
+            Empresa solicitante:
+          </p>
+          <p>
+            {{ticketWithHistory?.usuTxNome}}
+          </p>
+        </div>
+
+        <div class="flex flex-col px-5 flex-wrap">
+          <div class="flex gap-27">
+            <div>
+              <p>
+                Chamado:
+              </p>
+              <p>
+                {{ticketWithHistory?.chaTxTitulo}}
+              </p>
+            </div>
+            <p>
+              {{ticketWithHistory?.chaTxTitulo}}
+            </p>
+          </div>
+
+          <div class="py-5">
+            <p>
+              Descrição:
+            </p>
+            <p>
+              {{ticketWithHistory?.chaTxDescricao}}
+            </p>
+          </div>
+        </div>
+
+        <div class="px-5">
+          @if (ticketWithHistory?.historicos) {
+          <h2 class="py-2">
+            Atualizações:
+          </h2>
+          <div class=" flex flex-col gap-5">
+            @for (item of ticketWithHistory?.historicos; track $index) {
+            <div class="py-5 border-1  border-gray-300 p-2 bg-white rounded-md">
+
+              <div class="flex gap-5 flex-wrap ">
+                <p>
+                  Profissional: {{item.proTxNome}},
+                </p>
+
+                <p>
+                  {{item.hicDtAtualizacao! | converDate }}
+                </p>
+              </div>
+
+              <div>
+                Justificativa :
+                @if (item.hicTxJustificativa != null) {
+                {{item.hicTxJustificativa}}
+                }@else {
+                ----
+                }
+              </div>
+
+              <p class="text-end">
+                Status: {{item.hicTxStatus}}
+              </p>
+
+
+            </div>
+
+            }
+          </div>
+          }@else {
+          <p>
+            Chamado não iniciado
+          </p>
+          }
+
+        </div>
+
+      </div>
+
+      @if (ticketForm!=null) {
+      @if (ticketForm.chaTxStatus != status.CONCLUIDO && ticketForm.chaTxStatus != status.CANCELADO) {
+      <div *hasPermission="[profile.ROLE_SUPORTE]" class="flex w-full left-0 justify-end">
+
+        @if (ticketForm.chaTxStatus == status.ABERTO) {
+        <button class="bg-blue-500 p-1 rounded-md w-32 text-white cursor-pointer">
+          <p class="text-xl" (click)="manageTicket(ticketForm, status.EM_ANDAMENTO)">
+            Atender
+          </p>
+        </button>
+        }@else {
+        <button class="bg-blue-500 p-1 rounded-md w-32 text-white cursor-pointer">
+          <p class="text-xl" (click)="manageTicket(ticketForm, status.CONCLUIDO)">
+            finalizar
+          </p>
+        </button>
+        }
+
+      </div>
+      }
+      }
+
+
+    </div>
   </div>
 
 
