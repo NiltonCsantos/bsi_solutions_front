@@ -1,3 +1,5 @@
+import { TicketEnum } from "../enums/ticketEnum"
+
 export interface Professional{
     proNrId?:number
     usuBlAtivo?:boolean
@@ -10,3 +12,36 @@ export interface Professional{
     eqiNrId:number,
     equiTxNome?:string
 }
+
+export interface QuantityTick {
+  totalPedidos: number;
+  totalFinalizados: number;
+  totalAberto: number;
+  totalEmAndamento: number;
+  totalCancelado: number;
+}
+
+
+export interface TicketFormTeam {
+  totalTecnico: number;
+  totalSuporte: number;
+}
+
+export interface ManageTicketForm {
+  chaNrId: number;
+  chaTxStatus: TicketEnum;
+  hicTxJustificativa?: string;
+}
+
+export interface TopUser {
+  usuTxNome: string;
+  usuNrId: number;
+  totalChamados: number;
+}
+
+export interface ticketForMonth {
+   mes:string
+   totalChamados:number
+}
+
+

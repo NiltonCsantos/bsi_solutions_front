@@ -6,12 +6,12 @@
   <table class="w-full bg-white shadow-xl  h-full  overflow-y-scroll">
     <thead class="w-full relative">
       <tr class="flex justify-between items-center px-10 rounded-md w-full  pt-8">
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Nome</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Cpf</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Celular</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Email</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Equipe</th>
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-46 ">Status</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Nome</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Cpf</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Celular</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Email</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Equipe</th>
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-36 ">Status</th>
         <th class="text-left font-semibold text-sm text-[#045AFF] w-28 ">Editar</th>
       </tr>
 
@@ -20,14 +20,14 @@
       @for (professional of professionals; track $index) {
       <tr class="flex justify-between items-center py-2 px-10">
 
-        <td class="text-left text-sm w-46 ">{{professional.usuTxNome}}</td>
-        <td class="text-left text-sm w-46 ">{{professional.proTxCpf}}</td>
-        <td class="text-left text-sm w-46">{{professional.proTxCelular}}</td>
-        <td class="text-left text-sm w-46">{{professional.usuTxEmail}}</td>
-        <td class="text-left text-sm w-46">
+        <td class="text-left text-sm w-36 ">{{professional.usuTxNome}}</td>
+        <td class="text-left text-sm w-36 ">{{professional.proTxCpf}}</td>
+        <td class="text-left text-sm w-36">{{professional.proTxCelular}}</td>
+        <td class="text-left text-sm w-36">{{professional.usuTxEmail}}</td>
+        <td class="text-left text-sm w-36">
           {{professional.equiTxNome}}
         </td>
-        <td class="text-left text-sm w-46 flex items-center gap-4">
+        <td class="text-left text-sm w-36 flex items-center gap-4">
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" class="sr-only peer" [checked]="professional.usuBlAtivo"
               (click)="onToggleClick($event, professional)">
