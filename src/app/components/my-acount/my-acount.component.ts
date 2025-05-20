@@ -13,8 +13,6 @@ import { CommonModule } from '@angular/common';
   imports: [
     AsideComponent,
     HeaderComponent,
-    RouterOutlet,
-    ButtonComponent,
     ReactiveFormsModule,
     CommonModule,
     NgxMaskDirective

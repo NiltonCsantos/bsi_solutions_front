@@ -1,11 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HasPermissionDirective } from '../../directives/has-permission.directive';
-import { ProfileEnum } from '../../enums/ProfileEnum';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LegendsComponent } from "../shared/legends/legends.component";
 import { ApiService } from '../../services/api/api.service';
 import { Ticket } from '../../model/enterprise';
-import { TicketEnum } from '../../enums/ticketEnum';
 import { NgClass, NgStyle } from '@angular/common';
 import { ConverDatePipe } from '../../pipes/conver-date.pipe';
 import { TicktesForHistory } from '../../model/auth';
@@ -13,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ManageTicketForm } from '../../model/admin';
 import { FormsModule } from '@angular/forms';
+import { profileEnum, TicketEnum } from '../../enums/enum';
 
 @Component({
   selector: 'app-tickets',
@@ -22,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 })
 export default class TicketsComponent implements OnInit {
 
-  protected profile = ProfileEnum;
+  protected profile = profileEnum;
   protected apiService: ApiService = inject(ApiService);
   protected hoveredIndex: number | null = null;
   protected tickets: Ticket[] = []

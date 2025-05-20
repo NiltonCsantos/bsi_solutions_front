@@ -1,8 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LegendsComponent } from "../../shared/legends/legends.component";
-import { ButtonComponent } from "../../shared/button/button.component";
-import { TeamEnum } from '../../../enums/teamEnum';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Teams, Ticket } from '../../../model/enterprise';
 import { NgClass } from '@angular/common';
@@ -12,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-form',
-  imports: [RouterLink, LegendsComponent, ButtonComponent, NgClass, ReactiveFormsModule],
+  imports: [LegendsComponent, NgClass, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })

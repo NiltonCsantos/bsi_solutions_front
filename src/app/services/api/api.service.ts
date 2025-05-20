@@ -5,9 +5,8 @@ import { AuthData, TicktesForHistory, User } from '../../model/auth';
 import { Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
 import { ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TopUser } from '../../model/admin';
-import { AuthService } from '../auth/auth.service';
-import { ProfileEnum } from '../../enums/ProfileEnum';
 import { LocalstorageService } from '../localstorage/localstorage.service';
+import { profileEnum } from '../../enums/enum';
 
 
 @Injectable({
@@ -42,7 +41,7 @@ export class ApiService {
 
     const user: User = JSON.parse(this.local.getItemForLocalStorage("user") as string);
     const professional: Professional = JSON.parse(this.local.getItemForLocalStorage("professional") as string);
-    if (user.usuTxAutoridade == ProfileEnum.ROLE_SUPORTE && professional) {
+    if (user.usuTxAutoridade == profileEnum.ROLE_SUPORTE && professional) {
       params.eqiNrId = professional.eqiNrId
     }
 

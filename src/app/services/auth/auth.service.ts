@@ -5,7 +5,7 @@ import { DecodedToken, User, UserLogin } from "../../model/auth";
 import { LocalstorageService } from "../localstorage/localstorage.service";
 import { Router } from "@angular/router";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { ProfileEnum } from "../../enums/ProfileEnum";
+import { profileEnum } from "../../enums/enum";
 
 
 
@@ -17,7 +17,7 @@ export class AuthService {
   private router: Router = inject(Router);
 
 
-  temPermissao(perfisPermitidos: ProfileEnum[]): boolean {
+  temPermissao(perfisPermitidos: profileEnum[]): boolean {
     return perfisPermitidos.includes(this.getUser()!.usuTxAutoridade);
   }
 
@@ -27,7 +27,7 @@ export class AuthService {
 
         this.setAcessToken(value.acessToken);
         this.setRefreshToken(value.refreshToken);
-        if (this.getUser()?.usuTxAutoridade == ProfileEnum.ROLE_SUPORTE) {
+        if (this.getUser()?.usuTxAutoridade == profileEnum.ROLE_SUPORTE) {
           this.getProfessional();
         }
         this.navigateToTickets()

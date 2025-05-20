@@ -2,7 +2,6 @@ import { CanActivateChildFn, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { inject } from '@angular/core';
 import { DecodedToken } from '../model/auth';
-import { ProfileEnum } from '../enums/ProfileEnum';
 import { AuthService } from '../services/auth/auth.service';
 
 export const authGuard: CanActivateChildFn = (childRoute, state) => {

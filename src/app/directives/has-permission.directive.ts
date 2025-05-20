@@ -1,6 +1,6 @@
 import { Directive, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
-import { ProfileEnum } from '../enums/ProfileEnum';
+import { profileEnum } from '../enums/enum';
 
 @Directive({
   selector: '[hasPermission]',
@@ -12,7 +12,7 @@ export class HasPermissionDirective {
   #viewContainer: ViewContainerRef = inject(ViewContainerRef);
   #authService: AuthService = inject(AuthService);
 
-  @Input() set hasPermission(perfisPermitidos: ProfileEnum[]) {
+  @Input() set hasPermission(perfisPermitidos: profileEnum[]) {
 
     this.#viewContainer.clear();
     const temPermissao = this.#authService.temPermissao(perfisPermitidos);

@@ -1,4 +1,5 @@
-import { TicketEnum } from "../enums/ticketEnum"
+import { TicketEnum } from "../enums/enum"
+
 
 export interface Ticket {
   chaNrId?:number

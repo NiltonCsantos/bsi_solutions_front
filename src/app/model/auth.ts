@@ -1,7 +1,5 @@
 import { JwtPayload } from "jwt-decode";
-import { ProfileEnum } from "../enums/ProfileEnum";
-import { TicketEnum } from "../enums/ticketEnum";
-
+import { profileEnum, TicketEnum } from "../enums/enum";
 
 export interface AuthData {
   acessToken: string;
@@ -17,7 +15,7 @@ export interface User {
   usuNrId: number,
   usuTxNome: string,
   usuTxEmail: string,
-  usuTxAutoridade: ProfileEnum
+  usuTxAutoridade: profileEnum
 }
 
 export interface DecodedToken extends JwtPayload {

@@ -7,7 +7,7 @@ import { HeaderComponent } from "../header/header.component";
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [AsideComponent, HeaderComponent, ReactiveFormsModule, CommonModule],
+  imports: [ ReactiveFormsModule, CommonModule],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
