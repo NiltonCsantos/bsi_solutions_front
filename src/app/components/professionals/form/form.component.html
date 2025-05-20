@@ -1,92 +1,146 @@
-<div class=" flex flex-col h-[75vh] w-[75vw] gap-5">
+<div class="flex flex-col h-[75vh] w-[75vw] gap-5">
+  <app-legends
+    pathRoute="/chamados"
+    title="Cadastrar novo chamado"
+    textButton="Voltar"
+  />
 
-  <app-legends pathRoute="/chamados" title="Cadastrar novo chamado" textButton="Voltar" />
-
-
-  <div class="bg-white h-full  overflow-y-scroll">
-    <form class="flex w-full gap-5 flex-col h-full shadow-2xl p-5 rounded-md" [formGroup]="professionalForm"
-      (ngSubmit)="saveOrUpdateProfessional()">
+  <div class="bg-white h-fit overflow-y-scroll">
+    <form
+      class="flex w-full gap-5 flex-col h-full shadow-2xl p-5 rounded-md"
+      [formGroup]="professionalForm"
+      (ngSubmit)="saveOrUpdateProfessional()"
+    >
       <div class="flex w-full gap-5 flex-wrap">
         <div class="flex flex-col gap-2.5 py-5 w-96">
-          <label for="name">
-            <h2 class="">Nome</h2>
-          </label>
-
+          <label for="name"><h2>Nome</h2></label>
           <div class="h-10 w-full border-1 rounded-md border-gray-300">
-            <input type="text"
+            <input
+              type="text"
               class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="usuTxNome" id="name">
+              formControlName="usuTxNome"
+              id="name"
+              placeholder="Nome"
+            />
           </div>
+          @if (professionalForm.get('usuTxNome')?.touched &&
+          professionalForm.get('usuTxNome')?.invalid) {
+          <span class="text-red-500 text-xs">
+            @if (professionalForm.get('usuTxNome')?.errors?.['required']) { O
+            nome é obrigatório. } @if
+            (professionalForm.get('usuTxNome')?.errors?.['minlength']) { O nome
+            deve ter no mínimo 10 caracteres. } @if
+            (professionalForm.get('usuTxNome')?.errors?.['maxlength']) { O nome
+            pode ter no máximo 256 caracteres. }
+          </span>
+          }
         </div>
 
         <div class="flex flex-col gap-2.5 py-5 w-96">
-          <label for="phone">
-            <h2 class="">Celular</h2>
-          </label>
-
+          <label for="phone"><h2>Celular</h2></label>
           <div class="h-10 w-full border-1 rounded-md border-gray-300">
-            <input type="text"
+            <input
+              type="text"
               class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="proTxCelular" id="phone">
+              formControlName="proTxCelular"
+              id="phone"
+              mask="(00) 00000-0000"
+              placeholder="Celular"
+            />
           </div>
-        </div>
-
-         <div class="flex flex-col gap-2.5 py-5 w-96">
-          <label for="cpf">
-            <h2 class="">CPF</h2>
-          </label>
-
-          <div class="h-10 w-full border-1 rounded-md border-gray-300">
-            <input type="text"
-              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="proTxCpf" id="cpf">
-          </div>
-        </div>
-
-         <div class="flex flex-col gap-2.5 py-5 w-96">
-          <label for="email">
-            <h2 class="">Email</h2>
-          </label>
-
-          <div class="h-10 w-full border-1 rounded-md border-gray-300">
-            <input type="email"
-              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="usuTxEmail" id="email">
-          </div>
+          @if (professionalForm.get('proTxCelular')?.touched &&
+          professionalForm.get('proTxCelular')?.invalid) {
+          <span class="text-red-500 text-xs">
+            @if (professionalForm.get('proTxCelular')?.errors?.['required']) { O
+            número de celular é obrigatório. } @if
+            (professionalForm.get('proTxCelular')?.errors?.['minlength'] ||
+            professionalForm.get('proTxCelular')?.errors?.['maxlength']) { O
+            celular deve conter 11 dígitos. }
+          </span>
+          }
         </div>
 
         <div class="flex flex-col gap-2.5 py-5 w-96">
-          <label for="title">
-            <h2 class="">Time</h2>
-          </label>
+          <label for="cpf"><h2>CPF</h2></label>
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <input
+              type="text"
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="proTxCpf"
+              id="cpf"
+              mask="000.000.000-00"
+              placeholder="CPF"
+            />
+          </div>
+          @if (professionalForm.get('proTxCpf')?.touched &&
+          professionalForm.get('proTxCpf')?.invalid) {
+          <span class="text-red-500 text-xs">
+            @if (professionalForm.get('proTxCpf')?.errors?.['required']) { O CPF
+            é obrigatório. } @if
+            (professionalForm.get('proTxCpf')?.errors?.['minlength'] ||
+            professionalForm.get('proTxCpf')?.errors?.['maxlength']) { O CPF
+            deve conter 11 dígitos. }
+          </span>
+          }
+        </div>
 
+        <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="email"><h2>Email</h2></label>
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <input
+              type="email"
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              formControlName="usuTxEmail"
+              id="email"
+              placeholder="Email"
+            />
+          </div>
+          @if (professionalForm.get('usuTxEmail')?.touched &&
+          professionalForm.get('usuTxEmail')?.invalid) {
+          <span class="text-red-500 text-xs">
+            @if (professionalForm.get('usuTxEmail')?.errors?.['required']) { O
+            email é obrigatório. } @if
+            (professionalForm.get('usuTxEmail')?.errors?.['email']) { O email
+            deve ser válido. }
+          </span>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2.5 py-5 w-96">
+          <label for="title"><h2>Time</h2></label>
           <div class="h-10 w-full border-1 rounded-md border-gray-300">
             <select
               class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-              formControlName="eqiNrId" id="team">
+              formControlName="eqiNrId"
+              id="team"
+            >
               <option [value]="0">Selecione uma opção</option>
               @for (team of teams; track $index) {
-                      <option [value]="team.eqiNrId">{{team.eqiTxNome}}</option>
+              <option [value]="team.eqiNrId">{{ team.eqiTxNome }}</option>
               }
             </select>
           </div>
+          @if (professionalForm.get('eqiNrId')?.touched &&
+          professionalForm.get('eqiNrId')?.invalid) {
+          <span class="text-red-500 text-xs">
+            Você deve selecionar um time.
+          </span>
+          }
         </div>
       </div>
 
-
-      <div class="w-full flex justify-end  items-end flex-grow">
-
-        <div class=" p-2  rounded-xs flex justify-center items-center text-white font-semibold w-28"
-          [ngClass]="{'bg-[#363062]':professionalForm.valid, 'bg-[#363062]/40 cursor-not-allowed': !professionalForm.valid}">
-          <button [disabled]="!professionalForm.valid">
-            salvar
-          </button>
+      <!-- Botão -->
+      <div class="w-full flex justify-end items-end flex-grow">
+        <div
+          class="p-2 rounded-xs flex justify-center items-center text-white font-semibold w-28"
+          [ngClass]="{
+            'bg-[#363062]': professionalForm.valid,
+            'bg-[#363062]/40 cursor-not-allowed': !professionalForm.valid
+          }"
+        >
+          <button [disabled]="!professionalForm.valid">salvar</button>
         </div>
-
       </div>
     </form>
-
   </div>
-
-
 </div>

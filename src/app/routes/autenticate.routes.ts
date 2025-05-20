@@ -34,6 +34,8 @@ export const authRoutes: Routes = [
         loadComponent: () => import("../components/professionals/form/form.component"),
         canActivate: [authGuard],
       },
+     
+
     ],
   }
 ];

@@ -2,16 +2,19 @@ import { Component, inject } from '@angular/core';
 import { LegendsComponent } from "../../shared/legends/legends.component";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Teams } from '../../../model/enterprise';
-import { NgClass } from '@angular/common';
+import { NgClass, CommonModule } from '@angular/common';
 import { ApiService } from '../../../services/api/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Professional } from '../../../model/admin';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-form',
-  imports: [LegendsComponent, ReactiveFormsModule, NgClass],
-  templateUrl: './form.component.html'
+  standalone: true,
+  imports: [LegendsComponent, ReactiveFormsModule, NgClass, CommonModule, NgxMaskDirective],
+  templateUrl: './form.component.html',
+  providers: [provideNgxMask()]
 })
 export default class FormComponent {
 

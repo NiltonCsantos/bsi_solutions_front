@@ -21,4 +21,20 @@ export const routes: Routes = [
     loadComponent: () => import("./components/my-acount/my-acount.component"),
     canActivate: [authGuard],
   },
+   {
+        path: 'redefinir-senha',
+        loadComponent: () => import("./components/reset-password/reset-password.component").then(m => m.ResetPasswordComponent), //conferir com o manco pra ver se ta certo
+
+
+      },
+      {
+        path: 'confirmar-senha',
+        loadComponent: () => import("./components/reset-password/confirm-password/confirm-password.component").then(m => m.ConfirmPasswordComponent),
+
+      },
+       {
+        path: 'cadastro',
+        loadComponent: () => import("./components/sign-up/sign-up.component").then(m => m.SignUpComponent),
+
+      },
 ];

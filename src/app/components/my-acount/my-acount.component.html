@@ -3,13 +3,149 @@
   <div class="flex flex-col flex-grow bg-gradient-to-r bg-gray-50 p-5">
     <app-header class="w-full" />
     <div class="w-full h-[100%] p-10">
+      <div class="flex flex-col h-[75vh] w-[75vw] gap-5">
+        <div class="bg-white h-fit overflow-y-scroll shadow-xl">
+          <form
+            [formGroup]="formConta"
+            class="p-2 w-auto flex flex-col space-y-4"
+          >
+            <h1 class="text-2xl font-bold">Minha conta</h1>
 
-      <div class=" flex flex-col h-[75vh] w-[75vw] gap-5">
-        <div class="bg-white h-full  overflow-y-scroll shadow-xl">
+            <div class="flex flex-row mt-5 space-x-5">
+              <div class="w-full">
+                <input
+                  type="text"
+                  placeholder="Nome completo"
+                  formControlName="nome"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.nome.touched && f.nome.invalid) {
+                <small class="text-red-500 text-xs">
+                  @if (f.nome.errors?.['required']) { Nome é obrigatório. } @if
+                  (f.nome.errors?.['minlength']) { Nome deve ter no mínimo 10
+                  caracteres. }
+                </small>
+                }
+              </div>
+
+              <div class="w-full">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  formControlName="email"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.email.touched && f.email.invalid) {
+                <small class="text-red-500 text-xs">
+                  @if (f.email.errors?.['required']) { Email é obrigatório. }
+                  @if (f.email.errors?.['email']) { Email inválido. }
+                </small>
+                }
+              </div>
+            </div>
+
+            
+            <div class="flex flex-row mt-2 space-x-5">
+              <div class="w-full">
+                <input
+                  type="text"
+                  placeholder="CNPJ"
+                  mask="00.000.000/0000-00"
+                  formControlName="cnpj"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.cnpj.touched && f.cnpj.invalid) {
+                <small class="text-red-500 text-xs">CNPJ é obrigatório.</small>
+                }
+              </div>
+
+              <div class="w-full">
+                <input
+                  type="text"
+                  placeholder="CEP"
+                  mask="00000-000"
+                  formControlName="cep"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.cep.touched && f.cep.invalid) {
+                <small class="text-red-500 text-xs">CEP é obrigatório.</small>
+                }
+              </div>
+            </div>
+
+            <div class="flex flex-row mt-2 space-x-5">
+              <div class="w-full">
+                <input
+                  type="text"
+                  placeholder="Município"
+                  formControlName="municipio"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.municipio.touched && f.municipio.invalid) {
+                <small class="text-red-500 text-xs"
+                  >Município é obrigatório.</small
+                >
+                }
+              </div>
+
+              <div class="w-full">
+                <input
+                  type="text"
+                  placeholder="CPF"
+                  formControlName="cpf"
+                  mask="000.000.000-00"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.cpf.touched && f.cpf.invalid) {
+                <small class="text-red-500 text-xs">CPF é obrigatório.</small>
+                }
+              </div>
+            </div>
+
+            <div class="flex flex-row mt-2 space-x-5">
+              <div class="w-full">
+                <input
+                  type="text"
+                  placeholder="Telefone"
+                  formControlName="telefone"
+                  mask="(00) 00000-0000"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.telefone.touched && f.telefone.invalid) {
+                <small class="text-red-500 text-xs"
+                  >Telefone é obrigatório.</small
+                >
+                }
+              </div>
+
+              <div class="w-full">
+                <input
+                  type="password"
+                  placeholder="Senha"
+                  formControlName="senha"
+                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
+                />
+                @if (f.senha.touched && f.senha.invalid) {
+                <small class="text-red-500 text-xs">
+                  @if (f.senha.errors?.['required']) { Senha é obrigatória. }
+                  @if (f.senha.errors?.['minlength']) { Senha deve ter no mínimo
+                  8 caracteres. }
+                </small>
+                }
+              </div>
+            </div>
+          </form>
+
+          <div class="w-full flex justify-end items-end flex-grow">
+            <button
+              [disabled]="formConta.invalid"
+              class="p-2 px-5 text-sm rounded-xs flex justify-center items-center bg-[#4D4C7D] text-white font-semibold mr-4 my-10"
+            >
+              Atualizar
+            </button>
+          </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </main>
