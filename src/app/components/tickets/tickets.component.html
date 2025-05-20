@@ -15,7 +15,7 @@
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_SUPORTE]">Cancelar
         </th>
 
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_SUPORTE]">
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_ADMINISTRADOR]">
           Transferir
         </th>
 
@@ -58,7 +58,9 @@
             <i class="fa-solid fa-eye text-xl cursor-pointer px-5" (click)="viewPopup(ticket.chaNrId!)"></i>
           </button>
         </td>
-        <td class="text-left text-sm w-32">
+        <td class="text-left text-sm w-32"
+         *hasPermission="[profile.ROLE_SUPORTE]"
+        >
           <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO"
             (click)="updateTicketForm(ticket)">
             <i class="fa-solid fa-ban text-xl  px-3 cursor-pointer"
@@ -68,7 +70,9 @@
           </button>
         </td>
 
-        <td class="text-left text-sm w-32">
+        <td class="text-left text-sm w-32"
+         *hasPermission="[profile.ROLE_ADMINISTRADOR]"
+        >
           <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO"
             (click)="cancelTicket()">
             <i class="fas fa-exchange-alt px-3 text-xl"
