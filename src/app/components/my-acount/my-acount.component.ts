@@ -6,6 +6,8 @@ import { ButtonComponent } from "../shared/button/button.component";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
+import { HasPermissionDirective } from '../../directives/has-permission.directive';
+import { profileEnum } from '../../enums/enum';
 
 @Component({
   selector: 'app-my-acount',
@@ -15,12 +17,16 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     ReactiveFormsModule,
     CommonModule,
-    NgxMaskDirective
+    NgxMaskDirective,
+    HasPermissionDirective
   ],
   templateUrl: './my-acount.component.html',
   providers: [provideNgxMask()]
 })
 export default class MyAcountComponent {
+
+  protected profile = profileEnum
+
   formConta = inject(FormBuilder).group({
     nome: ['', [Validators.required, Validators.minLength(10)]],
     email: ['', [Validators.required, Validators.email]],

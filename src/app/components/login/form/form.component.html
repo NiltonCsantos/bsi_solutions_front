@@ -21,10 +21,7 @@
     </div>
   </div>
 
-  <div class="flex  items-center justify-between pr-20">
-    <div class="flex gap-2.5 px-20 items-center cursor-pointer">
-      <input type="checkbox" id="log" class="w-5 h-5">
-    </div>
+  <div class="flex  items-center justify-end pr-20">
 
     <div class="h-5">
       <p class="text-[#FF3939] cursor-pointer">Esqueceu a senha?</p>
@@ -35,7 +32,9 @@
     <app-button text="Entrar" [disabled]="!loginForm.valid"/>
   </div>
   <div class="mt-5 flex justify-end px-20 ">
-    <p class="text-blue-600 cursor-pointer">Não tem uma conta? Cadastre-se</p>
+    <a [routerLink]="['/cadastro']">
+      <p class="text-blue-600 cursor-pointer">Não tem uma conta? Cadastre-se</p>
+    </a>
   </div>
 
 </form>

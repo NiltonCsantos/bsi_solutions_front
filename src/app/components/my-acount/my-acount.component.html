@@ -7,7 +7,7 @@
         <div class="bg-white h-fit overflow-y-scroll shadow-xl">
           <form
             [formGroup]="formConta"
-            class="p-2 w-auto flex flex-col space-y-4"
+            class="p-2 w-auto flex flex-col space-y-4 p-5"
           >
             <h1 class="text-2xl font-bold">Minha conta</h1>
 
@@ -44,8 +44,10 @@
               </div>
             </div>
 
-            
-            <div class="flex flex-row mt-2 space-x-5">
+
+            <div class="flex flex-row mt-2 space-x-5"
+            *hasPermission="[profile.ROLE_EMPRESA]"
+            >
               <div class="w-full">
                 <input
                   type="text"
@@ -73,7 +75,9 @@
               </div>
             </div>
 
-            <div class="flex flex-row mt-2 space-x-5">
+            <div class="flex flex-row mt-2 space-x-5"
+               *hasPermission="[profile.ROLE_EMPRESA]"
+            >
               <div class="w-full">
                 <input
                   type="text"
@@ -88,7 +92,9 @@
                 }
               </div>
 
-              <div class="w-full">
+              <div class="w-full"
+                 *hasPermission="[profile.ROLE_SUPORTE]"
+              >
                 <input
                   type="text"
                   placeholder="CPF"
@@ -102,7 +108,9 @@
               </div>
             </div>
 
-            <div class="flex flex-row mt-2 space-x-5">
+            <div class="flex flex-row mt-2 space-x-5"
+               *hasPermission="[profile.ROLE_SUPORTE]"
+            >
               <div class="w-full">
                 <input
                   type="text"
@@ -115,22 +123,6 @@
                 <small class="text-red-500 text-xs"
                   >Telefone é obrigatório.</small
                 >
-                }
-              </div>
-
-              <div class="w-full">
-                <input
-                  type="password"
-                  placeholder="Senha"
-                  formControlName="senha"
-                  class="placeholder:text-gray-500 border rounded-md border-zinc-400 text-sm w-full h-10 p-3"
-                />
-                @if (f.senha.touched && f.senha.invalid) {
-                <small class="text-red-500 text-xs">
-                  @if (f.senha.errors?.['required']) { Senha é obrigatória. }
-                  @if (f.senha.errors?.['minlength']) { Senha deve ter no mínimo
-                  8 caracteres. }
-                </small>
                 }
               </div>
             </div>

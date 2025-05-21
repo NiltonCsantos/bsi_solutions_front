@@ -3,10 +3,11 @@ import { ButtonComponent } from "../../shared/button/button.component";
 import { UserLogin } from '../../../model/auth';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form',
-  imports: [ButtonComponent, ReactiveFormsModule],
+  imports: [ButtonComponent, ReactiveFormsModule,RouterLink],
   templateUrl: './form.component.html'
 })
 export class FormComponent {

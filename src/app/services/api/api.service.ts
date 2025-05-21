@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthData, TicktesForHistory, User } from '../../model/auth';
-import { Teams, Ticket } from '../../model/enterprise';
+import { Adrdres, AuthData, TicktesForHistory, User } from '../../model/auth';
+import { EnterPrise, Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
 import { ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TopUser } from '../../model/admin';
 import { LocalstorageService } from '../localstorage/localstorage.service';
@@ -14,7 +14,7 @@ import { profileEnum } from '../../enums/enum';
 })
 export class ApiService {
 
-  url: string = "https://fruitfeira.shop/v1"
+  url: string = "http://localhost:8080/v1"
 
   httpClient = inject(HttpClient);
 
@@ -28,6 +28,10 @@ export class ApiService {
 
   visualizeProgesse(chaNrId: number): Observable<ResponseDto<TicktesForHistory>> {
     return this.httpClient.get<ResponseDto<TicktesForHistory>>(`${this.url}/chamados/historico/${chaNrId}`);
+  }
+
+  getCep(cep: string): Observable<ResponseDto<Adrdres>> {
+    return this.httpClient.get<ResponseDto<Adrdres>>(`${this.url}/cep/${cep}`);
   }
 
   //empresa
@@ -97,6 +101,10 @@ export class ApiService {
     return this.httpClient.post<void>(`${this.url}/admin/registrar-profissional`, form);
   }
 
+  cadastreEnterprise(form:EnterPrise){
+      return this.httpClient.post<void>(`${this.url}/auth/registrar-empresa`, form);
+  }
+
   updateProfessional(form: Professional, proNrId: number): Observable<void> {
     return this.httpClient.put<void>(`${this.url}/admin/atualizar-profissional/${proNrId}`, form);
   }
@@ -105,7 +113,7 @@ export class ApiService {
     return this.httpClient.get<PageResponse<TopUser>>(`${this.url}/profissionais/mais-chamados`);
   }
 
-   getTicketsForMont(munNrId?:number): Observable<PageResponse<ticketForMonth>> {
+  getTicketsForMont(munNrId?: number): Observable<PageResponse<ticketForMonth>> {
     return this.httpClient.get<PageResponse<ticketForMonth>>(`${this.url}/chamados/contar-mes`);
   }
 

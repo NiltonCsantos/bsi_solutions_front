@@ -36,3 +36,12 @@ interface History {
   hicTxStatus: TicketEnum,
   proTxNome:string
 }
+
+export interface Adrdres {
+  cep: string;
+  localidade: string;
+  uf: string;
+  munNrId: number;
+  estNrId: number;
+}
+
