@@ -14,7 +14,7 @@ import { profileEnum } from '../../enums/enum';
 })
 export class ApiService {
 
-  url: string = "http://localhost:8080/v1"
+  url: string = " https://fruitfeira.shop/v1"
 
   httpClient = inject(HttpClient);
 
@@ -48,10 +48,7 @@ export class ApiService {
     if (user.usuTxAutoridade == profileEnum.ROLE_SUPORTE && professional) {
       params.eqiNrId = professional.eqiNrId
     }
-
-
     return this.httpClient.get<PageResponse<Ticket>>(`${this.url}/chamados`, { params });
-
   }
 
   cadastreTicket(form: Ticket): Observable<void> {
