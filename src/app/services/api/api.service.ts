@@ -14,7 +14,7 @@ import { profileEnum } from '../../enums/enum';
 })
 export class ApiService {
 
-  url: string = "https://fruitfeira.shop:8080/v1"
+  url: string = "http://localhost:8080/v1"
 
   httpClient = inject(HttpClient);
 
