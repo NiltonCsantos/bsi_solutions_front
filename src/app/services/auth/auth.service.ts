@@ -6,6 +6,7 @@ import { LocalstorageService } from "../localstorage/localstorage.service";
 import { Router } from "@angular/router";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { profileEnum } from "../../enums/enum";
+import { ToastrService } from "ngx-toastr";
 
 
 
@@ -15,7 +16,7 @@ export class AuthService {
   private apiService = inject(ApiService);
   private localStorageService = inject(LocalstorageService);
   private router: Router = inject(Router);
-
+  private toastrService:ToastrService = inject(ToastrService)
 
   temPermissao(perfisPermitidos: profileEnum[]): boolean {
     return perfisPermitidos.includes(this.getUser()!.usuTxAutoridade);
@@ -33,10 +34,16 @@ export class AuthService {
         this.navigateToTickets()
 
       },
-      error: (e: HttpErrorResponse) => {
-        console.log(e);
-        // this.toastService.error(e.error.message)
-      }
+     error: (e: HttpErrorResponse) => {
+          console.log(e);
+          if (e.error.fields) {
+            e.error.fields.map((field: any) =>
+              this.toastrService.error(field.fieldErrorMessage)
+            )
+          }else{
+              this.toastrService.error(e.error.message);
+          }
+        }
     })
   }
 
