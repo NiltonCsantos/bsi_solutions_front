@@ -15,7 +15,9 @@
         <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_SUPORTE]">Cancelar
         </th>
 
-        <th class="text-left font-semibold text-sm text-[#045AFF] w-32" *hasPermission="[profile.ROLE_ADMINISTRADOR]">
+        <th class="text-left font-semibold text-sm text-[#045AFF] w-32
+        cursor-pointer
+        " *hasPermission="[profile.ROLE_ADMINISTRADOR]">
           Transferir
         </th>
 
@@ -58,25 +60,22 @@
             <i class="fa-solid fa-eye text-xl cursor-pointer px-5" (click)="viewPopup(ticket.chaNrId!)"></i>
           </button>
         </td>
-        <td class="text-left text-sm w-32"
-         *hasPermission="[profile.ROLE_SUPORTE]"
-        >
+        <td class="text-left text-sm w-32" *hasPermission="[profile.ROLE_SUPORTE]">
           <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO"
             (click)="updateTicketForm(ticket)">
             <i class="fa-solid fa-ban text-xl  px-3 cursor-pointer"
               [ngClass]="{'text-red-500':ticket.chaTxStatus != status.CONCLUIDO && ticket.chaTxStatus != status.CANCELADO}"
-              (click)="cancelTicket()"
-              ></i>
+              (click)="cancelTicket()"></i>
           </button>
         </td>
 
-        <td class="text-left text-sm w-32"
-         *hasPermission="[profile.ROLE_ADMINISTRADOR]"
-        >
-          <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO"
-            (click)="cancelTicket()">
-            <i class="fas fa-exchange-alt px-3 text-xl"
-              [ngClass]="{'text-green-500':ticket.chaTxStatus != status.CONCLUIDO && ticket.chaTxStatus != status.CANCELADO}"></i>
+        <td class="text-left text-sm w-32" *hasPermission="[profile.ROLE_ADMINISTRADOR]">
+          <button [disabled]="ticket.chaTxStatus! == status.CONCLUIDO || ticket.chaTxStatus == status.CANCELADO || ticket.chaTxStatus == status.ABERTO"
+            (click)="openPopupTransfer(ticket)">
+            <i class="fas fa-exchange-alt px-3 text-xl cursor-pointer" [ngClass]="{'text-green-500':
+              ticket.chaTxStatus != status.CONCLUIDO && ticket.chaTxStatus != status.CANCELADO
+             && ticket.chaTxStatus !== status.ABERTO
+              }"></i>
           </button>
         </td>
       </tr>
@@ -108,9 +107,7 @@
             <div class="h-40 w-full border border-gray-300 rounded-md">
               <textarea
                 class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5 py-4 resize-none"
-                id="description"
-                [(ngModel)]="description"
-                ></textarea>
+                id="description" [(ngModel)]="description"></textarea>
             </div>
           </div>
         </div>
@@ -120,11 +117,9 @@
       @if (ticketForm.chaTxStatus != status.CONCLUIDO && ticketForm.chaTxStatus != status.CANCELADO) {
       <div *hasPermission="[profile.ROLE_SUPORTE]" class="flex w-full left-0 justify-end">
         <button class=" p-1 rounded-md w-32 text-white cursor-pointer"
-        [ngClass]="{'bg-red-500':description.length>0, 'bg-red-300':description.length == 0}"
-        [disabled]="description.length ==0"
-        (click)="manageTicket(ticketForm,  status.CANCELADO, description)"
-        >
-          <p class="text-xl" >
+          [ngClass]="{'bg-red-500':description.length>0, 'bg-red-300':description.length == 0}"
+          [disabled]="description.length ==0" (click)="manageTicket(ticketForm,  status.CANCELADO, description)">
+          <p class="text-xl">
             Cancelar
           </p>
         </button>
@@ -137,7 +132,6 @@
 
     </div>
   </div>
-
 
   <div class="absolute h-full w-full flex justify-center items-center" [ngClass]="{'hidden':isPopupHidden}"> -->
     <div class=" transform w-[500px] rounded-md shadow-2xl bg-white h-[550px] p-5 flex flex-col gap-5
@@ -188,6 +182,14 @@
               {{ticketWithHistory?.chaTxDescricao}}
             </p>
           </div>
+        </div>
+
+        <div class="h-62 px-5">
+          @if (ticketWithHistory?.chaTxImage) {
+          <img [src]="ticketWithHistory?.chaTxImage" />
+          }@else {
+          <p class="font-semibold">Nenhuma imagem em anexo</p>
+          }
         </div>
 
         <div class="px-5">
@@ -254,6 +256,72 @@
           </p>
         </button>
         }
+
+      </div>
+      }
+      }
+
+
+    </div>
+  </div>
+
+  <div class="absolute h-full w-full flex justify-center items-center" [ngClass]="{'hidden':isPopupTransferHidden}"> -->
+    <div class=" transform w-[500px] rounded-md shadow-2xl bg-white h-[550px] p-5 flex flex-col gap-5
+    animate-[popIn_0.40s_ease-out_forwards]
+    ">
+
+      <div class="h-11/12 overflow-scroll py-5 flex flex-col gap-5">
+        <div class="fixed left-0 top-0 p-5 w-full bg-white z-0">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-medium">
+              Transferir
+            </h2>
+            <i class="fa-solid fa-xmark text-xl cursor-pointer" (click)="closePopupTransfer()"></i>
+          </div>
+
+        </div>
+
+
+        <div class="p-5 mt-5 flex flex-col gap-5">
+          <label for="" class="text-xl">
+            Profissional atual
+          </label>
+
+          <input type="text"
+            class="bg-gray-200 h-10 w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+            [(ngModel)]="proTxNome" disabled id="title">
+
+        </div>
+
+        <div class="px-5">
+          <div class="h-10 w-full border-1 rounded-md border-gray-300">
+            <select
+              class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
+              [(ngModel)]="proNrIdNovo"
+              id="team">
+              <option [value]="0">Selecione uma opção</option>
+
+              @for (item of professionals; track $index) {
+              <option [value]="item.proNrId">
+                {{item.usuTxNome}}
+              </option>
+              }
+
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      @if (ticketForm!=null) {
+      @if (ticketForm.chaTxStatus != status.CONCLUIDO && ticketForm.chaTxStatus != status.CANCELADO) {
+      <div *hasPermission="[profile.ROLE_ADMINISTRADOR]" class="flex w-full left-0 justify-end">
+
+        <button class="bg-blue-500 p-1 rounded-md w-32 text-white cursor-pointer">
+          <p class="text-xl" (click)="transferTicket()">
+            Transferir
+          </p>
+        </button>
 
       </div>
       }

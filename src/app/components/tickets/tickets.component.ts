@@ -9,7 +9,7 @@ import { ConverDatePipe } from '../../pipes/conver-date.pipe';
 import { TicktesForHistory } from '../../model/auth';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { ManageTicketForm } from '../../model/admin';
+import { ManageTicketForm, Professional } from '../../model/admin';
 import { FormsModule } from '@angular/forms';
 import { profileEnum, TicketEnum } from '../../enums/enum';
 
@@ -30,11 +30,16 @@ export default class TicketsComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute)
   protected isPopupHidden: boolean = true;
   protected isPopupCancelHidden: boolean = true;
+  protected isPopupTransferHidden: boolean = true;
   protected ticketWithHistory?: TicktesForHistory;
   protected toastService: ToastrService = inject(ToastrService)
   protected ticketForm!: Ticket
   protected status = TicketEnum;
   protected description:string = ""
+  protected professional?:Professional
+  protected proTxNome:string = "";
+  protected professionals:Professional[] = []
+  protected proNrIdNovo!:number
 
 
   ngOnInit(): void {
@@ -116,5 +121,49 @@ export default class TicketsComponent implements OnInit {
 
   cancelTicket() {
     this.isPopupCancelHidden = false;
+  }
+
+  closePopupTransfer(){
+    this.isPopupTransferHidden = true;
+  }
+
+  openPopupTransfer(ticket:Ticket){
+    this.ticketForm = ticket;
+    this.apiService.getProfessionalForTicket(ticket.chaNrId!)
+    .subscribe(
+      {
+        next:(value)=>{
+          this.professional = value.response
+          this.proTxNome = value.response.usuTxNome
+          this.apiService.getProfessionals(this.professional?.proNrId)
+          .subscribe({
+            next:(value)=>{
+              this.professionals = value.response.content;
+            }
+          })
+        }
+      }
+    )
+    this.isPopupTransferHidden = false
+  }
+
+  transferTicket(){
+    this.apiService.TransferTicket({chaNrId:this.ticketForm.chaNrId!, proNrIdAtual:this.professional!.proNrId!, proNrIdNovo:this.proNrIdNovo})
+    .subscribe({
+      next:()=>{
+        this.isPopupTransferHidden = true;
+        this.toastService.success("Transferencia realizada com sucesso")
+      },
+      error:(e:HttpErrorResponse)=>{
+          console.log(e);
+          if (e.error.fields) {
+            e.error.fields.map((field: any) =>
+              this.toastService.error(field.fieldErrorMessage)
+            )
+          }else{
+              this.toastService.error(e.error.message);
+          }
+      }
+    })
   }
 }

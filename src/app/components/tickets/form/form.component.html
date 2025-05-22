@@ -4,7 +4,8 @@
 
 
   <div class="bg-white h-full  overflow-y-scroll">
-    <form class="flex w-full gap-5 flex-col bg-white shadow-2xl p-5 rounded-md" [formGroup]="tickForm" (ngSubmit)="saveOrUpdateTicket()">
+    <form class="flex w-full gap-5 flex-col bg-white shadow-2xl p-5 rounded-md" [formGroup]="tickForm"
+      (ngSubmit)="saveOrUpdateTicket()">
       <div class="flex w-full gap-5">
         <div class="flex flex-col gap-2.5 py-5 w-96">
           <label for="title">
@@ -29,7 +30,7 @@
               formControlName="eqiNrId" id="team">
               <option [value]="0">Selecione uma opção</option>
               @for (team of teams; track $index) {
-                      <option [value]="team.eqiNrId">{{team.eqiTxNome}}</option>
+              <option [value]="team.eqiNrId">{{team.eqiTxNome}}</option>
               }
             </select>
           </div>
@@ -42,11 +43,16 @@
         </label>
 
         <div class="w-full  flex gap-5 h-40">
-          <div class="h-10 w-full border border-none flex items-center px-5 cursor-pointer relative">
-            <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-             id="description" />
+          <div class="h-10 w-96 border border-none flex items-center px-5 cursor-pointer relative">
+            <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="description"
+              (change)="onFileSelected($event)" />
             <i class="fa-solid fa-image text-xl"></i>
           </div>
+          @if (tickect?.chaTxImagem || imagemSelecionada) {
+          <div class="bg-amber-200 h-full">
+            <img [src]="imagemSelecionada || tickect?.chaTxImagem" alt="Imagem do chamado" />
+          </div>
+          }
         </div>
       </div>
 

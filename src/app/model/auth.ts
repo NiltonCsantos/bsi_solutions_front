@@ -26,6 +26,7 @@ export interface TicktesForHistory {
   chaTxTitulo: string,
   chaTxDescricao: string
   usuTxNome: string,
+  chaTxImage?:string,
   historicos: History[] | null
 }
 

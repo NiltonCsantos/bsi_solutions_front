@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Adrdres, AuthData, TicktesForHistory, User } from '../../model/auth';
 import { EnterPrise, Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
-import { ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TopUser } from '../../model/admin';
+import { ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TicketForTransfer, TopUser } from '../../model/admin';
 import { LocalstorageService } from '../localstorage/localstorage.service';
 import { profileEnum } from '../../enums/enum';
 
@@ -14,7 +14,7 @@ import { profileEnum } from '../../enums/enum';
 })
 export class ApiService {
 
-  url: string = "https://fruitfeira.shop/v1"
+  url: string = "http://localhost:8080/v1"
 
   httpClient = inject(HttpClient);
 
@@ -52,15 +52,48 @@ export class ApiService {
   }
 
   cadastreTicket(form: Ticket): Observable<void> {
-    return this.httpClient.post<void>(`${this.url}/chamados`, form);
+    const formData = new FormData();
+
+    const formObj = {
+      chaTxTitulo: form.chaTxTitulo!,
+      chaTxDescricao: form.chaTxDescricao!,
+      eqiNrId: form.eqiNrId!
+    };
+
+    formData.append('form', new Blob([JSON.stringify(formObj)], { type: 'application/json' }));
+
+    if (form.imagem) {
+      formData.append('imagem', form.imagem);
+    }
+    return this.httpClient.post<void>(`${this.url}/chamados`, formData);
   }
 
   updateTicket(form: Ticket, chaNrId: number): Observable<void> {
-    return this.httpClient.put<void>(`${this.url}/chamados/${chaNrId}`, form);
+    const formData = new FormData();
+
+    const formObj = {
+      chaTxTitulo: form.chaTxTitulo!,
+      chaTxDescricao: form.chaTxDescricao!,
+      eqiNrId: form.eqiNrId!
+    };
+
+    formData.append('form', new Blob([JSON.stringify(formObj)], { type: 'application/json' }));
+
+
+    if (form.imagem) {
+      formData.append('imagem', form.imagem);
+    }
+    return this.httpClient.put<void>(`${this.url}/chamados/${chaNrId}`, formData);
   }
 
   getTickForId(chaNrId: number): Observable<ResponseDto<Ticket>> {
     return this.httpClient.get<ResponseDto<Ticket>>(`${this.url}/chamados/${chaNrId}`);
+  }
+
+  getProfessionalForTicket(chaNrId: number): Observable<ResponseDto<Professional>> {
+
+
+    return this.httpClient.get<ResponseDto<Professional>>(`${this.url}/profissionais/chamados/${chaNrId}`);
   }
 
 
@@ -70,8 +103,13 @@ export class ApiService {
 
   //#administrador
 
-  getProfessionals(): Observable<PageResponse<Professional>> {
-    return this.httpClient.get<PageResponse<Professional>>(`${this.url}/profissionais`);
+  getProfessionals(proNrId?:number): Observable<PageResponse<Professional>> {
+     const params:any = {};
+
+    if(proNrId){
+      params.proNrId = proNrId;
+    }
+    return this.httpClient.get<PageResponse<Professional>>(`${this.url}/profissionais`, {params});
   }
 
   getProfessionalForId(proNrId: number): Observable<ResponseDto<Professional>> {
@@ -90,6 +128,10 @@ export class ApiService {
     return this.httpClient.put<ResponseDto<void>>(`${this.url}/profissionais/gerenciar-chamado`, form);
   }
 
+   TransferTicket(form: TicketForTransfer): Observable<ResponseDto<void>> {
+    return this.httpClient.put<ResponseDto<void>>(`${this.url}/chamados/transferir-profissional`, form);
+  }
+
   disableProfessional(proNrId: number): Observable<PageResponse<void>> {
     return this.httpClient.patch<PageResponse<void>>(`${this.url}/profissionais/${proNrId}`, {});
   }
@@ -98,8 +140,8 @@ export class ApiService {
     return this.httpClient.post<void>(`${this.url}/admin/registrar-profissional`, form);
   }
 
-  cadastreEnterprise(form:EnterPrise){
-      return this.httpClient.post<void>(`${this.url}/auth/registrar-empresa`, form);
+  cadastreEnterprise(form: EnterPrise) {
+    return this.httpClient.post<void>(`${this.url}/auth/registrar-empresa`, form);
   }
 
   updateProfessional(form: Professional, proNrId: number): Observable<void> {

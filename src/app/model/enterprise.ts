@@ -7,7 +7,9 @@ export interface Ticket {
   eqiNrId: number
   chaTxTitulo: string
   chaTxStatus?: TicketEnum,
-  chaTxDtAbertura?: string
+  chaTxDtAbertura?: string,
+  imagem?:File| null
+  chaTxImagem?:string
 }
 
 

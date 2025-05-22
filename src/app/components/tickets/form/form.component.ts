@@ -25,6 +25,10 @@ export default class FormComponent implements OnInit {
   private toastService: ToastrService = inject(ToastrService);
   private chaNrId?: number
   private router: Router = inject(Router);
+  selectedFile: File | null = null;
+  protected tickect?:Ticket;
+  protected imagemSelecionada: string | null = null;
+
 
   protected tickForm = this.fb.group({
     chaTxTitulo: ['', [Validators.minLength(1), Validators.maxLength(256), Validators.required]],
@@ -42,7 +46,8 @@ export default class FormComponent implements OnInit {
     const form: Ticket = {
       chaTxDescricao: this.tickForm.value.chaTxDescricao!,
       chaTxTitulo: this.tickForm.value.chaTxTitulo!,
-      eqiNrId: this.tickForm.value.eqiNrId!
+      eqiNrId: this.tickForm.value.eqiNrId!,
+      imagem:this.selectedFile
     }
 
     if (!this.chaNrId) {
@@ -84,11 +89,26 @@ export default class FormComponent implements OnInit {
         this.apiService.getTickForId(this.chaNrId)
           .subscribe({
             next: (value) => {
-              console.log(value);
+              this.tickect = value.response;
               this.tickForm.patchValue(value.response);
             }
           })
       }
     })
   }
+
+onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagemSelecionada = reader.result as string;
+    };
+
+    reader.readAsDataURL(file); // Lê o arquivo como base64
+  }
+}
+
 }
