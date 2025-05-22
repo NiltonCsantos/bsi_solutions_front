@@ -14,9 +14,16 @@
         <div class="h-8 border-1 rounded-md border-gray-300">
           <select
             class="bg-white h-full w-full rounded-md focus:outline-none focus:ring-0 focus:border-transparent px-5"
-            formControlName="eqiNrId" id="team">
-            <option value="SP">São Paulo</option>
-            <option value="RJ">Rio de Janeiro</option>
+            [(ngModel)]="cityNrId"
+            (change)="handleChange()"
+            >
+            @for (item of cities; track $index) {
+              <option value="undefined" disabled>
+                  Selecione uma cidade
+              </option>
+            <option [value]="item.cidNrId">{{item.cidTxNome}}</option>
+            }
+
           </select>
         </div>
       </div>
@@ -49,13 +56,13 @@
           <i class="fa-solid fa-user text-2xl"></i>
           <p>
             @for (item of professionals; track $index) {
-              <p>
-                {{item.usuTxNome}}
-              </p>
-              <p>
-               Total de chamados {{item.totalChamados}}
-              </p>
-            }
+          <p>
+            {{item.usuTxNome}}
+          </p>
+          <p>
+            Total de chamados {{item.totalChamados}}
+          </p>
+          }
           </p>
         </div>
 

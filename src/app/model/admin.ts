@@ -52,3 +52,8 @@ export interface TicketForTransfer{
 }
 
 
+
+export interface cityDto{
+  cidTxNome:string,
+  cidNrId:number
+}

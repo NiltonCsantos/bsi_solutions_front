@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Adrdres, AuthData, TicktesForHistory, User } from '../../model/auth';
 import { EnterPrise, Teams, Ticket } from '../../model/enterprise';
 import { PageResponse, ResponseDto } from '../../model/response';
-import { ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TicketForTransfer, TopUser } from '../../model/admin';
+import { cityDto, ManageTicketForm, Professional, QuantityTick, ticketForMonth, TicketFormTeam, TicketForTransfer, TopUser } from '../../model/admin';
 import { LocalstorageService } from '../localstorage/localstorage.service';
 import { profileEnum } from '../../enums/enum';
 
@@ -14,7 +14,7 @@ import { profileEnum } from '../../enums/enum';
 })
 export class ApiService {
 
-  url: string = "https://fruitfeira.shop/v1"
+  url: string = "http://localhost:8080/v1"
 
   httpClient = inject(HttpClient);
 
@@ -116,8 +116,11 @@ export class ApiService {
     return this.httpClient.get<ResponseDto<Professional>>(`${this.url}/profissionais/${proNrId}`);
   }
 
-  getQuantityTicet(): Observable<ResponseDto<QuantityTick>> {
-    return this.httpClient.get<ResponseDto<QuantityTick>>(`${this.url}/chamados/contar`);
+  getQuantityTicet(munNrId?:number): Observable<ResponseDto<QuantityTick>> {
+    const params:any = {}
+    if(munNrId)
+      params.munNrId =munNrId
+    return this.httpClient.get<ResponseDto<QuantityTick>>(`${this.url}/chamados/contar`, {params});
   }
 
   getQuantityTicketForTeam(munNrId?: number): Observable<ResponseDto<TicketFormTeam>> {
@@ -148,12 +151,19 @@ export class ApiService {
     return this.httpClient.put<void>(`${this.url}/admin/atualizar-profissional/${proNrId}`, form);
   }
 
-  getTicketesProfessionals(): Observable<PageResponse<TopUser>> {
-    return this.httpClient.get<PageResponse<TopUser>>(`${this.url}/profissionais/mais-chamados`);
+  getTicketesProfessionals(munNrId?:number): Observable<PageResponse<TopUser>> {
+     const params:any = {}
+    if(munNrId)
+      params.munNrId =munNrId
+    return this.httpClient.get<PageResponse<TopUser>>(`${this.url}/profissionais/mais-chamados`, {params});
   }
 
   getTicketsForMont(munNrId?: number): Observable<PageResponse<ticketForMonth>> {
     return this.httpClient.get<PageResponse<ticketForMonth>>(`${this.url}/chamados/contar-mes`);
+  }
+
+  getCitys(): Observable<PageResponse<cityDto>> {
+    return this.httpClient.get<PageResponse<cityDto>>(`${this.url}/cidades`);
   }
 
 }
